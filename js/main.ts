@@ -30,7 +30,10 @@ class UI{
         tr.classList.add("todo-item");
         tr.id = `todo-${todoTableBody.querySelectorAll(".todo-item").length+1}`;
 
-        const todoIcon:string = todo.isFinished ? '<i class="far fa-check-circle finished-icon"></i>' : '<i class="fas fa-clipboard-list unfinished-icon"></i>';
+        const todoIcon:string = 
+            todo.isFinished 
+                ? '<i class="far fa-check-circle finished-icon status-icon"></i>' 
+                : '<i class="fas fa-clipboard-list unfinished-icon status-icon"></i>';
 
         tr.innerHTML = 
         `
@@ -42,6 +45,12 @@ class UI{
         
         todoTableBody.prepend(tr);
     }
+}
+
+class ToDoRepository{
+    
+    public static allTodos:Todo[] = [];
+
 }
 
 const todoForm:HTMLElement = document.getElementById("add-todo-form");
@@ -61,6 +70,18 @@ todoForm.addEventListener("submit", e => {
 
     const todoBody:string = (<HTMLInputElement> document.getElementById("todo-description")).value;
 
-    ui.createTodo(new Todo(todoTitle, todoBody));
+
+    const oneTodo = new Todo(todoTitle, todoBody);
+    ToDoRepository.allTodos.push(oneTodo);
+
+    console.log(oneTodo);
+    console.log(ToDoRepository.allTodos)
+
+    ui.createTodo(oneTodo);
+    (<NodeList>document.querySelectorAll(".status-icon")).forEach(i => i.addEventListener("click", statusFunction))
 
 })
+
+function statusFunction(e:any):void{
+    console.log(e.target);
+}
