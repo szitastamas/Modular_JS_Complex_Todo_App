@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  color: #004872;
+}
+
+.todo-container {
+  width: 100%;
+  padding: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.todo-container #add-todo-form {
+  border: 2px solid #004872;
+  padding: 5rem 3rem;
+  border-radius: 10px;
+}
+
+.todo-container #add-todo-form h2 {
+  font-size: 2.1rem;
+}
+
+.todo-container #add-todo-form input,
+.todo-container #add-todo-form textarea {
+  border: #004872 1px solid;
+  -webkit-transition: 100ms all ease-out;
+  transition: 100ms all ease-out;
+  width: 100%;
+}
+
+.todo-container #add-todo-form input:hover,
+.todo-container #add-todo-form textarea:hover {
+  color: #0078bf;
+  border-color: #0078bf;
+}
+
+.todo-container #todo-table td, .todo-container #todo-table th {
+  text-align: center;
+}
+
+.todo-container #todo-table td i, .todo-container #todo-table th i {
+  font-size: 2rem;
+  cursor: pointer;
+  -webkit-transition: 150ms all ease-out;
+  transition: 150ms all ease-out;
+}
+
+.todo-container #todo-table td i:hover, .todo-container #todo-table th i:hover {
+  color: #0078bf;
+}
+
+.todo-container #todo-table td i.delete-icon:hover, .todo-container #todo-table th i.delete-icon:hover {
+  color: red;
+}
+/*# sourceMappingURL=style.css.map */
