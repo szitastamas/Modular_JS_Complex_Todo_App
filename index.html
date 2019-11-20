@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://kit.fontawesome.com/f0f430d4d5.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="./css/style.css">
-    <script defer src="./js/main.js"></script>
-    <title>Todo List</title>
-</head>
-<body>
-    <div class="todo-container">
-        <form id="add-todo-form">
-            <h2>My Todo List w/ TypeScript</h2>
-            <label for="todo-title">Todo Title</label>
-            <input type="text" name="todo-title" id="todo-title" placeholder="Insert ToDo title">
-            <label for="todo-description">Todo Description</label>
-            <textarea name="todo-description" id="todo-description" placeholder="Insert your todo description"></textarea>
-            <input type="submit" value="Add ToDo" id="add-todo-btn">
-        </form>
-        <table id="todo-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Title</th>
-                    <th>Todo description</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody id="todo-table-body"></tbody>
-        </table>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="https://kit.fontawesome.com/f0f430d4d5.js" crossorigin="anonymous"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+            integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
+        <script defer src="./js/main.js"></script>
+        <title>Todo List</title>
+    </head>
+    <body>
+        <div class="todo-container">
+            <form id="add-todo-form">
+                <h2>My Todo List w/ TypeScript</h2>
+                <label for="todo-title">Todo Title</label>
+                <input type="text" name="todo-title" id="todo-title" placeholder="Insert ToDo title" />
+                <label for="todo-description">Todo Description</label>
+                <textarea name="todo-description" id="todo-description" placeholder="Insert your todo description"></textarea>
+                <input type="submit" value="Add ToDo" id="add-todo-btn" />
+            </form>
+            <!-- <div class="alert"></div> -->
+            <table id="todo-table">
+                <thead>
+                    <tr>
+                        <th class="alert" colspan="5"></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Todo ID</th>
+                        <th>Title</th>
+                        <th>Todo description</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="todo-table-body"></tbody>
+            </table>
+        </div>
+    </body>
 </html>

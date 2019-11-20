@@ -1,62 +1,159 @@
 $dark-türkiz: rgb(0, 72, 114);
 $light-türkiz: lighten($dark-türkiz, 15);
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     color: $dark-türkiz;
 }
 
-.todo-container{
+.todo-container {
     width: 100%;
     padding: 5rem;
     display: flex;
     align-items: flex-start;
     justify-content: space-evenly;
-    
-    #add-todo-form{
+
+    #add-todo-form {
         border: 2px solid $dark-türkiz;
         padding: 5rem 3rem;
         border-radius: 10px;
-        h2{
+        h2 {
             font-size: 2.1rem;
         }
 
         input,
-        textarea{
+        textarea {
             border: $dark-türkiz 1px solid;
             transition: 100ms all ease-out;
             width: 100%;
 
-            &:hover{
+            &:hover {
                 color: $light-türkiz;
                 border-color: $light-türkiz;
             }
         }
     }
 
-    #todo-table{
-        td,th{
-            text-align: center;
+    #todo-table {
+        #todo-table-body {
+            .status-icon {
+                position: relative;
 
-            i{
+                &::after {
+                    content: 'Finish / Unfinish';
+                    padding: 0.4rem 0.7rem;
+                    //background: $dark-türkiz;
+                    border: $dark-türkiz 1.5px solid;
+                    border-radius: 5px;
+                    color: $dark-türkiz;
+                    font-weight: 600;
+                    position: absolute;
+                    top: -120%;
+                    left: -12rem;
+                    font-size: 1.2rem;
+                    min-width: 10rem;
+                    opacity: 0;
+                    transition: all 200ms ease-out;
+                    transform: rotate(-20deg) translate(2rem, 4rem);
+                    pointer-events: none;
+                }
+
+                &:hover:after {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        }
+
+        td,
+        th {
+            text-align: center;
+            width: auto;
+            i {
                 font-size: 2rem;
+                padding: 0.3rem;
                 cursor: pointer;
                 transition: 150ms all ease-out;
 
-                &:hover{
+                &:hover {
                     color: $light-türkiz;
                 }
-                &.delete-icon{
-                    &:hover{
+
+                &.finished-icon {
+                    color: green;
+
+                    &:hover {
+                        color: lighten(green, 5);
+                    }
+                }
+                &.delete-icon {
+                    position: relative;
+
+                    &::after {
+                        content: 'Delete ToDo';
+                        padding: 0.4rem 0.7rem;
+                        border: red 1.5px solid;
+                        border-radius: 5px;
                         color: red;
+                        font-weight: 600;
+                        position: absolute;
+                        top: -120%;
+                        left: 2rem;
+                        font-size: 1.2rem;
+                        min-width: 10rem;
+                        opacity: 0;
+                        transition: all 200ms ease-out;
+                        transform: rotate(20deg) translate(2rem, 4rem);
+                        pointer-events: none;
+                    }
+
+                    &:hover {
+                        color: red;
+
+                        &:after {
+                            opacity: 1;
+                            transform: none;
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+.alert {
+    text-align: center;
+    transition: 400ms all ease-out;
+    max-height: 0;
+    transform-origin: center center;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    margin: 1rem 0;
+    color: white;
+    opacity: 0;
+    border-radius: 5px;
+    animation: showAlert 400ms forwards;
+
+    &.success {
+        background: green;
+        opacity: 1;
+    }
+
+    &.error {
+        background: red;
+        opacity: 1;
+    }
+}
+
+@keyframes showAlert {
+    0% {
+    }
+    100% {
+        max-height: 100%;
     }
 }
