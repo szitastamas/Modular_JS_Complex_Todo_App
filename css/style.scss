@@ -16,14 +16,15 @@ body {
     padding: 5rem;
     display: flex;
     align-items: flex-start;
-    justify-content: space-evenly;
+    justify-content: space-around;
 
     #add-todo-form {
         border: 2px solid $dark-türkiz;
-        padding: 5rem 3rem;
+        padding: 5rem 2rem;
         border-radius: 10px;
         h2 {
             font-size: 2.1rem;
+            margin-bottom: 6rem;
         }
 
         input,
@@ -31,6 +32,10 @@ body {
             border: $dark-türkiz 1px solid;
             transition: 100ms all ease-out;
             width: 100%;
+
+            &#add-todo-btn{
+                margin-top: 4rem;
+            }
 
             &:hover {
                 color: $light-türkiz;
@@ -140,12 +145,12 @@ body {
     animation: showAlert 400ms forwards;
 
     &.success {
-        background: green;
+        background: $light-türkiz;
         opacity: 1;
     }
 
     &.error {
-        background: red;
+        background: $dark-türkiz;
         opacity: 1;
     }
 }
