@@ -24,7 +24,7 @@ body {
 
 .todo-container #add-todo-form {
   border: 2px solid #004872;
-  padding: 5rem 2rem;
+  padding: 5rem 2rem 4rem 2rem;
   border-radius: 10px;
 }
 
@@ -44,6 +44,12 @@ body {
 .todo-container #add-todo-form input#add-todo-btn,
 .todo-container #add-todo-form textarea#add-todo-btn {
   margin-top: 4rem;
+}
+
+.todo-container #add-todo-form input#add-todo-btn:hover,
+.todo-container #add-todo-form textarea#add-todo-btn:hover {
+  background: #004872;
+  color: whitesmoke;
 }
 
 .todo-container #add-todo-form input:hover,
