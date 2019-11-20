@@ -17,10 +17,10 @@ var ToDoRepository = /** @class */ (function () {
     return ToDoRepository;
 }());
 var Todo = /** @class */ (function () {
-    function Todo(title, todoBody) {
+    function Todo(title, todoDescription) {
         this.id = ToDoRepository.allTodos.length === 0 ? 0 : ToDoRepository.allTodos[ToDoRepository.allTodos.length - 1].id + 1;
         this.title = title;
-        this.todoBody = todoBody;
+        this.todoDescription = todoDescription;
         this.creationDate = Date.now();
         this.isFinished = false;
     }
@@ -36,7 +36,7 @@ var UI = /** @class */ (function () {
         var todoIcon = todo.isFinished
             ? '<i class="far fa-check-circle finished-icon status-icon"></i>'
             : '<i class="fas fa-clipboard-list unfinished-icon status-icon"></i>';
-        tr.innerHTML = "\n            <td>" + todoIcon + "</td>\n            <td data-todo-id=\"" + todo.id + "\">" + todo.id + "</td>\n            <td>" + todo.title + "</td>\n            <td>" + todo.todoBody + "</td>\n            <td><i class=\"far fa-times-circle delete-icon\"></i></td>\n        ";
+        tr.innerHTML = "\n            <td>" + todoIcon + "</td>\n            <td data-todo-id=\"" + todo.id + "\">" + todo.id + "</td>\n            <td>" + todo.title + "</td>\n            <td>" + todo.todoDescription + "</td>\n            <td><i class=\"far fa-times-circle delete-icon\"></i></td>\n        ";
         todoTableBody.prepend(tr);
     };
     UI.prototype.displayMessage = function (message, className) {
@@ -72,10 +72,10 @@ var todoTableBody = document.getElementById('todo-table-body');
 todoForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var ui = new UI();
-    var todoTitle = document.getElementById('todo-title').value;
-    var todoBody = document.getElementById('todo-description').value;
-    if (validateTodoFields(todoTitle, todoBody)) {
-        var oneTodo = new Todo(todoTitle, todoBody);
+    var todoTitle = document.getElementById('todo-title');
+    var todoBody = document.getElementById('todo-description');
+    if (validateTodoFields(todoTitle.value, todoBody.value)) {
+        var oneTodo = new Todo(todoTitle.value, todoBody.value);
         ToDoRepository.allTodos.push(oneTodo);
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
         console.log(ToDoRepository.allTodos);
@@ -83,6 +83,8 @@ todoForm.addEventListener('submit', function (e) {
         ui.paintOutTodo(oneTodo);
         document.querySelectorAll('.status-icon').forEach(function (i) { return i.addEventListener('click', statusFunction); });
         document.querySelectorAll('.delete-icon').forEach(function (i) { return i.addEventListener('click', removeTodo); });
+        todoTitle.value = "";
+        todoBody.value = "";
     }
     else {
         ui.displayMessage('Please fill in all fields!', 'error');

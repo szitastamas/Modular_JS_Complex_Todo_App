@@ -1,11 +1,3 @@
-interface TodoModel {
-    id: number;
-    title: string;
-    todoBody: string;
-    creationDate: number;
-    isFinished: boolean;
-}
-
 class Local_Storage {
     static saveToLocalStorage(todoArray: Todo[]): void {
         localStorage.setItem('todos', JSON.stringify(todoArray));
@@ -22,16 +14,16 @@ class ToDoRepository {
     public static allTodos: Todo[] = Local_Storage.getTodosFromLocalStorage() === null ? [] : Local_Storage.getTodosFromLocalStorage();
 }
 
-class Todo implements TodoModel {
+class Todo{
     id: number;
     title: string;
-    todoBody: string;
+    todoDescription: string;
     creationDate: number;
     isFinished: boolean;
-    constructor(title: string, todoBody: string) {
+    constructor(title: string, todoDescription: string) {
         this.id = ToDoRepository.allTodos.length === 0 ? 0 : ToDoRepository.allTodos[ToDoRepository.allTodos.length - 1].id + 1;
         this.title = title;
-        this.todoBody = todoBody;
+        this.todoDescription = todoDescription;
         this.creationDate = Date.now();
         this.isFinished = false;
     }
@@ -51,7 +43,7 @@ class UI {
             <td>${todoIcon}</td>
             <td data-todo-id="${todo.id}">${todo.id}</td>
             <td>${todo.title}</td>
-            <td>${todo.todoBody}</td>
+            <td>${todo.todoDescription}</td>
             <td><i class="far fa-times-circle delete-icon"></i></td>
         `;
 
@@ -103,12 +95,12 @@ todoForm.addEventListener('submit', e => {
 
     const ui = new UI();
 
-    const todoTitle: string = (<HTMLInputElement>document.getElementById('todo-title')).value;
+    const todoTitle = (<HTMLInputElement>document.getElementById('todo-title'));
 
-    const todoBody: string = (<HTMLInputElement>document.getElementById('todo-description')).value;
+    const todoBody = (<HTMLInputElement>document.getElementById('todo-description'));
 
-    if (validateTodoFields(todoTitle, todoBody)) {
-        const oneTodo = new Todo(todoTitle, todoBody);
+    if (validateTodoFields(todoTitle.value, todoBody.value)) {
+        const oneTodo = new Todo(todoTitle.value, todoBody.value);
         ToDoRepository.allTodos.push(oneTodo);
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
 
@@ -117,6 +109,8 @@ todoForm.addEventListener('submit', e => {
         ui.paintOutTodo(oneTodo);
         (<NodeList>document.querySelectorAll('.status-icon')).forEach(i => i.addEventListener('click', statusFunction));
         (<NodeList>document.querySelectorAll('.delete-icon')).forEach(i => i.addEventListener('click', removeTodo));
+        todoTitle.value = "";
+        todoBody.value = ""
     } else {
         ui.displayMessage('Please fill in all fields!', 'error');
     }
