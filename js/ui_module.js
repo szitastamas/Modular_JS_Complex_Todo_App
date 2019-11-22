@@ -1,13 +1,20 @@
-import { Todo } from './todo_modul.js';
+import { Todo, UrgentTodo } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
 import { ToDoRepository } from './todo_modul.js';
-import * as globalVars from './main.js';
 
 export class UI {
     paintOutTodo(todo) {
         let tr = document.createElement('tr');
-        tr.classList.add('todo-item');
-        tr.id = `todo-${globalVars.todoTableBody.querySelectorAll('.todo-item').length + 1}`;
+        tr.className = 'todo-item';
+        if(todo instanceof UrgentTodo){
+            tr.classList.add("urgent");
+        }
+        tr.id = `todo-${todo.id}`;
+        let shortBody = "";
+
+        if(todo.todoBody.length > 15){
+            shortBody = `${todo.todoBody.substring(0, 14)}...`;
+        }
 
         const todoIcon = todo.isFinished
             ? '<i class="far fa-check-circle finished-icon status-icon"></i>'
@@ -17,21 +24,25 @@ export class UI {
             <td>${todoIcon}</td>
             <td data-todo-id="${todo.id}">${todo.id}</td>
             <td>${todo.title}</td>
-            <td>${todo.todoBody}</td>
+            <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
             <td><i class="far fa-times-circle delete-icon"></i></td>
         `;
 
-        globalVars.todoTableBody.prepend(tr);
+        todoTableBody.prepend(tr);
+        if(document.querySelector(".empty-table-identifier")){
+            document.querySelector(".empty-table-identifier").remove();
+        }
     }
 
     displayMessage(message, className) {
+
         const msgDiv = document.querySelector('.alert');
         msgDiv.classList.add(className);
         msgDiv.textContent = message;
 
         setTimeout(() => {
             msgDiv.classList.remove(className);
-        }, 1500);
+        }, 1200);
     }
 
     updateTodoStatus(todo) {
@@ -54,5 +65,35 @@ export class UI {
         let toBeDeletedField = Array.from(todoTds).find(t => t.dataset.todoId == todo.id).parentElement;
 
         toBeDeletedField.remove();
+
+        this.checkTodoArray();
+    }
+
+
+    clearInput(){
+        todoForm.querySelectorAll('input[type="text"]').forEach(input => input.value ="");
+        console.log("Input fields cleared.")
+    }
+
+    checkTodoArray(){
+        if(ToDoRepository.allTodos.length === 0){
+            todoTableBody.innerHTML = `<tr class="empty-table-identifier"><td colspan="6">There are no todos to show...</td></tr>`;
+        }
+    }
+
+    checkBoxControl(){
+        
+        let isUrgentDataset = JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck);
+        urgentCheckBox.checked = isUrgentDataset
+
+        urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
+
+        return isUrgentDataset;
     }
 }
+
+export const urgentCheckBox = document.getElementById("urgent-todo-checkbox");
+export const urgentCheckBoxCover = document.querySelector(".checkbox-cover");
+export const todoForm = document.getElementById('add-todo-form');
+export const submitBtn = document.getElementById('add-todo-btn');
+export const todoTableBody = document.getElementById('todo-table-body');

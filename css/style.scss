@@ -27,14 +27,58 @@ body {
             margin-bottom: 6rem;
         }
 
+        .urgent-checkbox-field{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+
+            .checkbox-cover{
+                height: 15px;
+                width: 15px;
+                position: absolute;
+                border: .7px $light-türkiz solid;
+                cursor: pointer;
+                transition: 150ms background ease-out;
+
+                &:hover{
+                    background: lighten($light-türkiz, 15);
+                }
+
+                &[data-urgent-cb-check="true"]{
+                    background: $dark-türkiz;
+                }
+            }
+
+            label{
+                margin: 0;
+                padding: 0;
+            }
+
+            #urgent-todo-checkbox{
+                margin: 0 1rem 0 0;
+                width: auto;
+                visibility: hidden;
+
+            }
+        }
+
         input,
-        textarea {
+        textarea,
+        button {
             border: $dark-türkiz 1px solid;
             transition: 100ms all ease-out;
             width: 100%;
 
             &#add-todo-btn{
                 margin-top: 4rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                i{
+                    font-size: 1.7rem;
+                    margin-right: .5rem;
+                }
 
                 &:hover{
                     background: $dark-türkiz;
@@ -50,9 +94,19 @@ body {
     }
 
     #todo-table {
+
+        border-collapse: collapse;
+        border-spacing: 0;
         #todo-table-body {
+
+            .urgent{
+                background: lighten($light-türkiz, 55);
+                border: none;
+                font-weight: 600;
+            }
             .status-icon {
                 position: relative;
+                margin: 0 .5rem;
 
                 &::after {
                     content: 'Finish / Unfinish';
@@ -84,6 +138,7 @@ body {
         th {
             text-align: center;
             width: auto;
+            margin: 0;
             i {
                 font-size: 2rem;
                 padding: 0.3rem;

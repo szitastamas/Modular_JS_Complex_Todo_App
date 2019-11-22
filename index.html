@@ -18,12 +18,17 @@
     <body>
         <div class="todo-container">
             <form id="add-todo-form">
-                <h2>My Todo List w/ TypeScript</h2>
+                <h2>My Todo List w/ JS Modules</h2>
                 <label for="todo-title">Todo Title</label>
                 <input type="text" name="todo-title" id="todo-title" placeholder="Insert ToDo title" />
                 <label for="todo-description">Todo Description</label>
-                <textarea name="todo-description" id="todo-description" placeholder="Insert your todo description"></textarea>
-                <input type="submit" value="Add ToDo" id="add-todo-btn" />
+                <input type="text" name="todo-description" id="todo-description" placeholder="Insert your todo description"></input>
+                <div class="urgent-checkbox-field">
+                    <span class="checkbox-cover" data-urgent-cb-check="false"></span>
+                    <input type="checkbox" name="urgent-todo" id="urgent-todo-checkbox">
+                    <label for="urgent-todo-checkbox">Urgent</label>
+                </div>
+                <button type="submit" id="add-todo-btn"><i class="fas fa-plus"></i>Add Todo</button>
             </form>
             <!-- <div class="alert"></div> -->
             <table id="todo-table">

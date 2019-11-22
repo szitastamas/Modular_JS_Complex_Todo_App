@@ -33,8 +33,51 @@ body {
   margin-bottom: 6rem;
 }
 
+.todo-container #add-todo-form .urgent-checkbox-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  position: relative;
+}
+
+.todo-container #add-todo-form .urgent-checkbox-field .checkbox-cover {
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  border: 0.7px #0078bf solid;
+  cursor: pointer;
+  -webkit-transition: 150ms background ease-out;
+  transition: 150ms background ease-out;
+}
+
+.todo-container #add-todo-form .urgent-checkbox-field .checkbox-cover:hover {
+  background: #0ca5ff;
+}
+
+.todo-container #add-todo-form .urgent-checkbox-field .checkbox-cover[data-urgent-cb-check="true"] {
+  background: #004872;
+}
+
+.todo-container #add-todo-form .urgent-checkbox-field label {
+  margin: 0;
+  padding: 0;
+}
+
+.todo-container #add-todo-form .urgent-checkbox-field #urgent-todo-checkbox {
+  margin: 0 1rem 0 0;
+  width: auto;
+  visibility: hidden;
+}
+
 .todo-container #add-todo-form input,
-.todo-container #add-todo-form textarea {
+.todo-container #add-todo-form textarea,
+.todo-container #add-todo-form button {
   border: #004872 1px solid;
   -webkit-transition: 100ms all ease-out;
   transition: 100ms all ease-out;
@@ -42,24 +85,55 @@ body {
 }
 
 .todo-container #add-todo-form input#add-todo-btn,
-.todo-container #add-todo-form textarea#add-todo-btn {
+.todo-container #add-todo-form textarea#add-todo-btn,
+.todo-container #add-todo-form button#add-todo-btn {
   margin-top: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.todo-container #add-todo-form input#add-todo-btn i,
+.todo-container #add-todo-form textarea#add-todo-btn i,
+.todo-container #add-todo-form button#add-todo-btn i {
+  font-size: 1.7rem;
+  margin-right: .5rem;
 }
 
 .todo-container #add-todo-form input#add-todo-btn:hover,
-.todo-container #add-todo-form textarea#add-todo-btn:hover {
+.todo-container #add-todo-form textarea#add-todo-btn:hover,
+.todo-container #add-todo-form button#add-todo-btn:hover {
   background: #004872;
   color: whitesmoke;
 }
 
 .todo-container #add-todo-form input:hover,
-.todo-container #add-todo-form textarea:hover {
+.todo-container #add-todo-form textarea:hover,
+.todo-container #add-todo-form button:hover {
   color: #0078bf;
   border-color: #0078bf;
 }
 
+.todo-container #todo-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.todo-container #todo-table #todo-table-body .urgent {
+  background: #d8f1ff;
+  border: none;
+  font-weight: 600;
+}
+
 .todo-container #todo-table #todo-table-body .status-icon {
   position: relative;
+  margin: 0 .5rem;
 }
 
 .todo-container #todo-table #todo-table-body .status-icon::after {
@@ -92,6 +166,7 @@ body {
 .todo-container #todo-table th {
   text-align: center;
   width: auto;
+  margin: 0;
 }
 
 .todo-container #todo-table td i,

@@ -1,10 +1,17 @@
-import { UI } from './ui_module.js';
-import { Todo, ToDoRepository } from './todo_modul.js';
+import {
+    UI,
+    urgentCheckBox,
+    urgentCheckBoxCover,
+    todoForm,
+    submitBtn,
+    todoTableBody
+} from './ui_module.js';
+import { Todo, ToDoRepository, UrgentTodo } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
 
-export const todoForm = document.getElementById('add-todo-form');
-export const submitBtn = document.getElementById('add-todo-btn');
-export const todoTableBody = document.getElementById('todo-table-body');
+
+
+
 
 // Submitting a Todo
 todoForm.addEventListener('submit', e => {
@@ -17,7 +24,15 @@ todoForm.addEventListener('submit', e => {
     const todoBody = document.getElementById('todo-description').value;
 
     if (validateTodoFields(todoTitle, todoBody)) {
-        const oneTodo = new Todo(todoTitle, todoBody);
+
+        // TODO Decide if urgent or regular
+        let oneTodo;
+        if(ui.checkBoxControl() === true){
+            oneTodo = new UrgentTodo(todoTitle, todoBody, new Date("2020-01-01"));
+        }else{
+            oneTodo = new Todo(todoTitle, todoBody);
+        }
+
         ToDoRepository.allTodos.push(oneTodo);
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
 
@@ -26,6 +41,7 @@ todoForm.addEventListener('submit', e => {
         ui.paintOutTodo(oneTodo);
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
         document.querySelectorAll('.delete-icon').forEach(i => i.addEventListener('click', removeTodo));
+        ui.clearInput();
     } else {
         ui.displayMessage('Please fill in all fields!', 'error');
     }
@@ -60,10 +76,15 @@ function removeTodo(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    let ui = new UI();
+    const ui = new UI();
+    Local_Storage.getTodosFromLocalStorage();
     if (ToDoRepository.allTodos.length !== 0) {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
         document.querySelectorAll('.delete-icon').forEach(i => i.addEventListener('click', removeTodo));
     }
+
+    urgentCheckBoxCover.addEventListener("click", ui.checkBoxControl)
+
+    ui.checkTodoArray();
 });
