@@ -25,9 +25,9 @@ todoForm.addEventListener('submit', e => {
 
     if (validateTodoFields(todoTitle, todoBody)) {
 
-        // TODO Decide if urgent or regular
         let oneTodo;
-        if(ui.checkBoxControl() === true){
+    
+        if(urgentCheckBox.checked === true){
             oneTodo = new UrgentTodo(todoTitle, todoBody, new Date("2020-01-01"));
         }else{
             oneTodo = new Todo(todoTitle, todoBody);

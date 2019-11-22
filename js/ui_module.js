@@ -84,11 +84,22 @@ export class UI {
     checkBoxControl(){
         
         let isUrgentDataset = JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck);
-        urgentCheckBox.checked = isUrgentDataset
-
+        
+        urgentCheckBox.checked = !isUrgentDataset
         urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
+        handleCalendar(JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck));
 
         return isUrgentDataset;
+    }
+
+
+}
+
+function handleCalendar(isUrgentChecked){
+    if(isUrgentChecked){
+        console.log("Calendar revealed")
+    }else{
+        console.log("Calendar hidden")
     }
 }
 
