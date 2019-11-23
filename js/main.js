@@ -40,7 +40,7 @@ todoForm.addEventListener('submit', e => {
         ui.displayMessage('Todo successfully added', 'success');
         ui.paintOutTodo(oneTodo);
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
-        document.querySelectorAll('.delete-icon').forEach(i => i.addEventListener('click', removeTodo));
+        document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
         ui.clearInput();
     } else {
         ui.displayMessage('Please fill in all fields!', 'error');
@@ -81,10 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ToDoRepository.allTodos.length !== 0) {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
-        document.querySelectorAll('.delete-icon').forEach(i => i.addEventListener('click', removeTodo));
+        document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
     }
 
-    urgentCheckBoxCover.addEventListener("click", ui.checkBoxControl)
+    urgentCheckBoxCover.addEventListener("click", (e) => {
+        ui.checkBoxControl();
+        ui.handlePopup(e.srcElement);
+    })
 
     ui.checkTodoArray();
 });

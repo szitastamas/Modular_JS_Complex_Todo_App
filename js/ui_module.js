@@ -25,7 +25,17 @@ export class UI {
             <td data-todo-id="${todo.id}">${todo.id}</td>
             <td>${todo.title}</td>
             <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
-            <td><i class="far fa-times-circle delete-icon"></i></td>
+            <td>
+                <ul class="todo-btns">
+                    <li class="todo-btn">
+                        <i class="fas fa-pencil-alt edit-todo-btn"></i>
+                    </li>
+                    <li class="todo-btn">
+                        <i class="far fa-times-circle delete-todo-btn"></i>
+                    </li>
+                </ul>
+            </td>
+
         `;
 
         todoTableBody.prepend(tr);
@@ -87,19 +97,30 @@ export class UI {
         
         urgentCheckBox.checked = !isUrgentDataset
         urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
-        handleCalendar(JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck));
 
         return isUrgentDataset;
     }
 
+    handlePopup(eventSource){
+
+
+        if(eventSource === urgentCheckBoxCover){
+            handleCalendar(urgentCheckBox.checked)
+        }
 
 }
 
-function handleCalendar(isUrgentChecked){
-    if(isUrgentChecked){
-        console.log("Calendar revealed")
+
+}
+const handleCalendar = function(isUrgent){
+
+
+
+
+    if(isUrgent){
+        console.log("Calendar revealed");
     }else{
-        console.log("Calendar hidden")
+        console.log("Calendar hidden");
     }
 }
 
@@ -108,3 +129,8 @@ export const urgentCheckBoxCover = document.querySelector(".checkbox-cover");
 export const todoForm = document.getElementById('add-todo-form');
 export const submitBtn = document.getElementById('add-todo-btn');
 export const todoTableBody = document.getElementById('todo-table-body');
+export const editTodoBtn = document.querySelectorAll(".edit-todo-btn");
+
+
+// <td><i class="fas fa-pencil-alt" id="edit-todo-btn"></i></td>
+// <td><i class="far fa-times-circle delete-icon"></i></td>

@@ -8,9 +8,7 @@ export class Local_Storage {
     }
 
     static getTodosFromLocalStorage() {
-        const todosFromLS = JSON.parse(localStorage.getItem('todos'));
-
-        const todos = [];
+        const todosFromLS = JSON.parse(localStorage.getItem('todos')) == null ? [] : JSON.parse(localStorage.getItem('todos'));
 
         Array.from(todosFromLS).forEach(el => {
             if(el.whenIsItDue){
@@ -20,6 +18,5 @@ export class Local_Storage {
             }
         })
 
-        return todos;
     }
 }

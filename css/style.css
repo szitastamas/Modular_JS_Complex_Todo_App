@@ -169,8 +169,13 @@ body {
   margin: 0;
 }
 
-.todo-container #todo-table td i,
-.todo-container #todo-table th i {
+.todo-container #todo-table td .todo-btns,
+.todo-container #todo-table th .todo-btns {
+  list-style: none;
+}
+
+.todo-container #todo-table td .todo-btns i,
+.todo-container #todo-table th .todo-btns i {
   font-size: 2rem;
   padding: 0.3rem;
   cursor: pointer;
@@ -178,28 +183,28 @@ body {
   transition: 150ms all ease-out;
 }
 
-.todo-container #todo-table td i:hover,
-.todo-container #todo-table th i:hover {
+.todo-container #todo-table td .todo-btns i:hover,
+.todo-container #todo-table th .todo-btns i:hover {
   color: #0078bf;
 }
 
-.todo-container #todo-table td i.finished-icon,
-.todo-container #todo-table th i.finished-icon {
+.todo-container #todo-table td .todo-btns i.finished-icon,
+.todo-container #todo-table th .todo-btns i.finished-icon {
   color: green;
 }
 
-.todo-container #todo-table td i.finished-icon:hover,
-.todo-container #todo-table th i.finished-icon:hover {
+.todo-container #todo-table td .todo-btns i.finished-icon:hover,
+.todo-container #todo-table th .todo-btns i.finished-icon:hover {
   color: #009a00;
 }
 
-.todo-container #todo-table td i.delete-icon,
-.todo-container #todo-table th i.delete-icon {
+.todo-container #todo-table td .todo-btns i.delete-icon,
+.todo-container #todo-table th .todo-btns i.delete-icon {
   position: relative;
 }
 
-.todo-container #todo-table td i.delete-icon::after,
-.todo-container #todo-table th i.delete-icon::after {
+.todo-container #todo-table td .todo-btns i.delete-icon::after,
+.todo-container #todo-table th .todo-btns i.delete-icon::after {
   content: 'Delete ToDo';
   padding: 0.4rem 0.7rem;
   border: red 1.5px solid;
@@ -219,13 +224,13 @@ body {
   pointer-events: none;
 }
 
-.todo-container #todo-table td i.delete-icon:hover,
-.todo-container #todo-table th i.delete-icon:hover {
+.todo-container #todo-table td .todo-btns i.delete-icon:hover,
+.todo-container #todo-table th .todo-btns i.delete-icon:hover {
   color: red;
 }
 
-.todo-container #todo-table td i.delete-icon:hover:after,
-.todo-container #todo-table th i.delete-icon:hover:after {
+.todo-container #todo-table td .todo-btns i.delete-icon:hover:after,
+.todo-container #todo-table th .todo-btns i.delete-icon:hover:after {
   opacity: 1;
   -webkit-transform: none;
           transform: none;
@@ -272,5 +277,14 @@ body {
   100% {
     max-height: 100%;
   }
+}
+
+#popup-container {
+  height: 30rem;
+  width: 35rem;
+  position: absolute;
+  border: 1px solid #0078bf;
+  border-radius: 5px;
+  padding: 3rem;
 }
 /*# sourceMappingURL=style.css.map */

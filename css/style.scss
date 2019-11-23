@@ -139,53 +139,57 @@ body {
             text-align: center;
             width: auto;
             margin: 0;
-            i {
-                font-size: 2rem;
-                padding: 0.3rem;
-                cursor: pointer;
-                transition: 150ms all ease-out;
-
-                &:hover {
-                    color: $light-türkiz;
-                }
-
-                &.finished-icon {
-                    color: green;
-
-                    &:hover {
-                        color: lighten(green, 5);
-                    }
-                }
-                &.delete-icon {
-                    position: relative;
-
-                    &::after {
-                        content: 'Delete ToDo';
-                        padding: 0.4rem 0.7rem;
-                        border: red 1.5px solid;
-                        border-radius: 5px;
-                        color: red;
-                        font-weight: 600;
-                        position: absolute;
-                        top: -120%;
-                        left: 2rem;
-                        font-size: 1.2rem;
-                        min-width: 10rem;
-                        opacity: 0;
-                        transition: all 200ms ease-out;
-                        transform: rotate(20deg) translate(2rem, 4rem);
-                        pointer-events: none;
-                    }
-
-                    &:hover {
-                        color: red;
-
-                        &:after {
-                            opacity: 1;
-                            transform: none;
+            
+            .todo-btns{
+                list-style: none;
+                    i {
+                        font-size: 2rem;
+                        padding: 0.3rem;
+                        cursor: pointer;
+                        transition: 150ms all ease-out;
+        
+                        &:hover {
+                            color: $light-türkiz;
+                        }
+        
+                        &.finished-icon {
+                            color: green;
+        
+                            &:hover {
+                                color: lighten(green, 5);
+                            }
+                        }
+                        &.delete-icon {
+                            position: relative;
+        
+                            &::after {
+                                content: 'Delete ToDo';
+                                padding: 0.4rem 0.7rem;
+                                border: red 1.5px solid;
+                                border-radius: 5px;
+                                color: red;
+                                font-weight: 600;
+                                position: absolute;
+                                top: -120%;
+                                left: 2rem;
+                                font-size: 1.2rem;
+                                min-width: 10rem;
+                                opacity: 0;
+                                transition: all 200ms ease-out;
+                                transform: rotate(20deg) translate(2rem, 4rem);
+                                pointer-events: none;
+                            }
+        
+                            &:hover {
+                                color: red;
+        
+                                &:after {
+                                    opacity: 1;
+                                    transform: none;
+                                }
+                            }
                         }
                     }
-                }
             }
         }
     }
@@ -221,4 +225,13 @@ body {
     100% {
         max-height: 100%;
     }
+}
+
+#popup-container{
+    height: 30rem;
+    width: 35rem;
+    position: absolute;
+    border: 1px solid $light-türkiz;
+    border-radius: 5px;
+    padding: 3rem;
 }
