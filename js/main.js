@@ -1,23 +1,16 @@
-import {
-    UI,
-    urgentCheckBox,
-    urgentCheckBoxCover,
-    todoForm,
-    submitBtn,
-    todoTableBody
-} from './ui_module.js';
+import { UI } from './ui_module.js';
 import { Todo, ToDoRepository, UrgentTodo } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
 
+const ui = new UI();
 
 
 
 
 // Submitting a Todo
-todoForm.addEventListener('submit', e => {
+ui.todoForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    const ui = new UI();
 
     const todoTitle = document.getElementById('todo-title').value;
 
@@ -59,7 +52,6 @@ function validateTodoFields(field1, field2) {
 }
 
 function statusFunction(e) {
-    const ui = new UI();
     let clickedTodoId = e.target.parentElement.nextElementSibling.textContent;
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     clickedTodo.isFinished = !clickedTodo.isFinished;
@@ -69,7 +61,6 @@ function statusFunction(e) {
 }
 
 function removeTodo(e) {
-    const ui = new UI();
     let clickedTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(clickedTodo), 1);
@@ -79,7 +70,6 @@ function removeTodo(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const ui = new UI();
     Local_Storage.getTodosFromLocalStorage();
     console.log(ToDoRepository.allTodos)
     if (ToDoRepository.allTodos.length !== 0) {
@@ -90,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseleave', removeShowTime));
     }
 
-    urgentCheckBoxCover.addEventListener("click", (e) => {
+    ui.urgentCheckBoxCover.addEventListener("click", (e) => {
         ui.checkBoxControl();
         
     })
@@ -99,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const showTime = function(e){
-    const ui = new UI();
     let urgTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
     let checkedTodo = ToDoRepository.allTodos.find(t => t.id == urgTodoId);
 

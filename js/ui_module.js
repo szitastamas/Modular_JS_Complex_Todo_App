@@ -3,6 +3,15 @@ import { Local_Storage } from './local_storage_module.js';
 import { ToDoRepository } from './todo_modul.js';
 
 export class UI {
+    constructor(){
+        this.urgentCheckBox = document.getElementById("urgent-todo-checkbox");
+        this.urgentCheckBoxCover = document.querySelector(".checkbox-cover");
+        this.todoForm = document.getElementById('add-todo-form');
+        this.submitBtn = document.getElementById('add-todo-btn');
+        this.todoTableBody = document.getElementById('todo-table-body');
+        this.editTodoBtn = document.querySelectorAll(".edit-todo-btn");
+    }
+
     paintOutTodo(todo) {
         let tr = document.createElement('tr');
         tr.className = 'todo-item';
@@ -48,7 +57,7 @@ export class UI {
 
         ;
 
-        todoTableBody.prepend(tr);
+        this.todoTableBody.prepend(tr);
         if(document.querySelector(".empty-table-identifier")){
             document.querySelector(".empty-table-identifier").remove();
         }
@@ -91,7 +100,7 @@ export class UI {
 
 
     clearInput(){
-        todoForm.querySelectorAll('input[type="text"]').forEach(input => input.value ="");
+        this.todoForm.querySelectorAll('input[type="text"]').forEach(input => input.value ="");
         console.log("Input fields cleared.")
     }
 
@@ -103,11 +112,11 @@ export class UI {
 
     checkBoxControl(){
         
-        let isUrgentDataset = JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck);
+        let isUrgentDataset = JSON.parse(this.urgentCheckBoxCover.dataset.urgentCbCheck);
         
         handleCalendar(!isUrgentDataset)
-        urgentCheckBox.checked = !isUrgentDataset
-        urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
+        this.urgentCheckBox.checked = !isUrgentDataset
+        this.urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
         return isUrgentDataset;
     }
 
@@ -134,12 +143,12 @@ const handleCalendar = function(isUrgent){
         document.querySelector("[data-urgent-reveal]").dataset.urgentReveal = isUrgent;
 }
 
-export const urgentCheckBox = document.getElementById("urgent-todo-checkbox");
-export const urgentCheckBoxCover = document.querySelector(".checkbox-cover");
-export const todoForm = document.getElementById('add-todo-form');
-export const submitBtn = document.getElementById('add-todo-btn');
-export const todoTableBody = document.getElementById('todo-table-body');
-export const editTodoBtn = document.querySelectorAll(".edit-todo-btn");
+// const urgentCheckBox = document.getElementById("urgent-todo-checkbox");
+// const urgentCheckBoxCover = document.querySelector(".checkbox-cover");
+// const todoForm = document.getElementById('add-todo-form');
+// const submitBtn = document.getElementById('add-todo-btn');
+// const todoTableBody = document.getElementById('todo-table-body');
+// const editTodoBtn = document.querySelectorAll(".edit-todo-btn");
 
 
 // <td><i class="fas fa-pencil-alt" id="edit-todo-btn"></i></td>
