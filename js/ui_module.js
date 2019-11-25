@@ -20,23 +20,33 @@ export class UI {
             ? '<i class="far fa-check-circle finished-icon status-icon"></i>'
             : '<i class="fas fa-clipboard-list unfinished-icon status-icon"></i>';
 
-        tr.innerHTML = `
-            <td>${todoIcon}</td>
-            <td data-todo-id="${todo.id}">${todo.id}</td>
-            <td>${todo.title}</td>
-            <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
-            <td>
-                <ul class="todo-btns">
-                    <li class="todo-btn">
-                        <i class="fas fa-pencil-alt edit-todo-btn"></i>
-                    </li>
-                    <li class="todo-btn">
+            if(todo instanceof UrgentTodo){
+                tr.innerHTML = `
+                    <td class="urgent-icon-td">
+                        <i class="far fa-clock clock-icon"></i>
+                    </td>
+                    <td>${todoIcon}</td>
+                    <td data-todo-id="${todo.id}">${todo.id}</td>
+                    <td>${todo.title}</td>
+                    <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
+                    <td>
                         <i class="far fa-times-circle delete-todo-btn"></i>
-                    </li>
-                </ul>
-            </td>
+                    </td>`
 
-        `;
+            }else{
+
+                tr.innerHTML = `
+                    <td></td>
+                    <td>${todoIcon}</td>
+                    <td data-todo-id="${todo.id}">${todo.id}</td>
+                    <td>${todo.title}</td>
+                    <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
+                    <td>
+                        <i class="far fa-times-circle delete-todo-btn"></i>
+                    </td>`
+            }
+
+        ;
 
         todoTableBody.prepend(tr);
         if(document.querySelector(".empty-table-identifier")){
@@ -71,7 +81,7 @@ export class UI {
 
     deleteTodo(todo) {
         let todoTds = document.querySelectorAll('[data-todo-id]');
-
+        console.log(todoTds)
         let toBeDeletedField = Array.from(todoTds).find(t => t.dataset.todoId == todo.id).parentElement;
 
         toBeDeletedField.remove();
@@ -95,33 +105,33 @@ export class UI {
         
         let isUrgentDataset = JSON.parse(urgentCheckBoxCover.dataset.urgentCbCheck);
         
+        handleCalendar(!isUrgentDataset)
         urgentCheckBox.checked = !isUrgentDataset
         urgentCheckBoxCover.dataset.urgentCbCheck = !isUrgentDataset;
-
         return isUrgentDataset;
     }
 
-    handlePopup(eventSource){
+    showRemainingTime(urgentTodo, tableElem){
+        const timeDiv = document.createElement("div");
+
+        let remainingTime = urgentTodo.calcRemainingTime();
 
 
-        if(eventSource === urgentCheckBoxCover){
-            handleCalendar(urgentCheckBox.checked)
-        }
+        timeDiv.className = "time-div";
+        timeDiv.innerHTML = `
+            ${remainingTime.days == 0 ? "" : remainingTime.days + " day(s),"}
+            ${remainingTime.hours < 10 ? "0"+remainingTime.hours : remainingTime.hours}:
+            ${remainingTime.mins < 10 ? "0" + remainingTime.mins : remainingTime.mins}:
+            ${remainingTime.secs < 10 ? "0" + remainingTime.secs : remainingTime.secs} left
+        `;
 
-}
-
+        tableElem.appendChild(timeDiv);
+        
+    }
 
 }
 const handleCalendar = function(isUrgent){
-
-
-
-
-    if(isUrgent){
-        console.log("Calendar revealed");
-    }else{
-        console.log("Calendar hidden");
-    }
+        document.querySelector("[data-urgent-reveal]").dataset.urgentReveal = isUrgent;
 }
 
 export const urgentCheckBox = document.getElementById("urgent-todo-checkbox");

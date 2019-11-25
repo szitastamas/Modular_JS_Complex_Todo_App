@@ -28,6 +28,11 @@
                     <input type="checkbox" name="urgent-todo" id="urgent-todo-checkbox">
                     <label for="urgent-todo-checkbox">Urgent</label>
                 </div>
+                <div class="urgent-todo-calendar-container" data-urgent-reveal="false">
+                    <label for="urgent-todo-calendar">Add due date</label>
+                    <input type="date" name="urgent-date-day" id="urgent-todo-calendar-day">
+                    <input type="time" name="urgent-date-time" id="urgent-todo-calendar-time">
+                </div>
                 <button type="submit" id="add-todo-btn"><i class="fas fa-plus"></i>Add Todo</button>
             </form>
             <!-- <div class="alert"></div> -->
@@ -38,10 +43,11 @@
                     </tr>
                     <tr>
                         <th></th>
+                        <th>Status</th>
                         <th>Todo ID</th>
                         <th>Title</th>
                         <th>Todo description</th>
-                        <th>More</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody id="todo-table-body"></tbody>

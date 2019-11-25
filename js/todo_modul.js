@@ -4,10 +4,6 @@
 
 export class ToDoRepository {
 
-    // static allTodos = 
-    // Local_Storage.getTodosFromLocalStorage() === null 
-    // ? [] 
-    // : Local_Storage.getTodosFromLocalStorage();
     static allTodos = [];
 }
 
@@ -16,7 +12,7 @@ export class Todo {
         this.id = ToDoRepository.allTodos.length === 0 ? 0 : ToDoRepository.allTodos[ToDoRepository.allTodos.length - 1].id + 1;
         this.title = title;
         this.todoBody = todoBody;
-        this.creationDate = Date.now();
+        this.creationDate = new Date();
         this.isFinished = false;
     }
 }
@@ -26,10 +22,27 @@ export class UrgentTodo extends Todo{
     constructor(title, todoBody, whenIsItDue){
         super(title, todoBody)
 
-        this.whenIsItDue = whenIsItDue;
+        this.whenIsItDue = new Date(whenIsItDue);
     }
 
     calcRemainingTime(){
-        return this.whenIsItDue - this.creationDate;
+        let totalSecs = (this.whenIsItDue - this.creationDate) / 1000;
+        let totalMins = totalSecs / 60;
+        let totalHours = totalMins / 60;
+        let totalDays = totalHours / 24;
+
+        let remHours = (totalDays % 1)*24;
+        let remMins = (totalHours % 1) * 60;
+        let remSecs = (totalMins % 1) * 60;
+
+        const remTimeObject = {
+            "days" : Math.floor(totalDays),
+            "hours" : remHours.toFixed(0),
+            "mins" : remMins.toFixed(0),
+            "secs" : remSecs.toFixed(0)
+        }
+
+
+        return remTimeObject
     }
 }

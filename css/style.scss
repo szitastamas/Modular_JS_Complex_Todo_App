@@ -22,6 +22,8 @@ body {
         border: 2px solid $dark-türkiz;
         padding: 5rem 2rem 4rem 2rem;
         border-radius: 10px;
+        z-index: 3;
+        position: relative;
         h2 {
             font-size: 2.1rem;
             margin-bottom: 6rem;
@@ -47,6 +49,7 @@ body {
 
                 &[data-urgent-cb-check="true"]{
                     background: $dark-türkiz;
+                    box-shadow: inset 0 0 0 2px white;
                 }
             }
 
@@ -71,7 +74,7 @@ body {
             width: 100%;
 
             &#add-todo-btn{
-                margin-top: 4rem;
+                margin-top: 2rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -91,6 +94,23 @@ body {
                 border-color: $light-türkiz;
             }
         }
+
+
+            .urgent-todo-calendar-container{
+                margin: 1rem 0;
+                display: none;
+                opacity: 0;
+
+                &[data-urgent-reveal="true"]{
+                    display: block;
+                    animation: revealItem 500ms forwards;
+                }
+
+                #urgent-todo-calendar-day,
+                #urgent-todo-calendar-time{
+                    padding: 1rem;
+                }
+            }
     }
 
     #todo-table {
@@ -98,12 +118,18 @@ body {
         border-collapse: collapse;
         border-spacing: 0;
         #todo-table-body {
-
             .urgent{
                 background: lighten($light-türkiz, 55);
                 border: none;
                 font-weight: 600;
+                position: relative;
+
+                td:first-child{
+                    background: white;
+                    border: none;
+                }
             }
+
             .status-icon {
                 position: relative;
                 margin: 0 .5rem;
@@ -139,57 +165,76 @@ body {
             text-align: center;
             width: auto;
             margin: 0;
+            &:first-child{
+                border-bottom: none;
+            }
+
+            &.urgent-icon-td{
+                position: relative;
+
+                .time-div{
+                    position: absolute;
+                    color: white;
+                    font-weight: 600;
+                    top: -10px;
+                    padding: 1rem;
+                    left: -200%;
+                    font-size: 1.4rem;
+                    pointer-events: none;
+                    animation: revealItem 600ms forwards;
+                    width: max-content;
+                    opacity: 0;
+                    background: rgba(32, 32, 32, 0.801);
+                }
+            }
             
-            .todo-btns{
-                list-style: none;
-                    i {
-                        font-size: 2rem;
-                        padding: 0.3rem;
-                        cursor: pointer;
-                        transition: 150ms all ease-out;
-        
-                        &:hover {
-                            color: $light-türkiz;
-                        }
-        
-                        &.finished-icon {
-                            color: green;
-        
-                            &:hover {
-                                color: lighten(green, 5);
-                            }
-                        }
-                        &.delete-icon {
-                            position: relative;
-        
-                            &::after {
-                                content: 'Delete ToDo';
-                                padding: 0.4rem 0.7rem;
-                                border: red 1.5px solid;
-                                border-radius: 5px;
-                                color: red;
-                                font-weight: 600;
-                                position: absolute;
-                                top: -120%;
-                                left: 2rem;
-                                font-size: 1.2rem;
-                                min-width: 10rem;
-                                opacity: 0;
-                                transition: all 200ms ease-out;
-                                transform: rotate(20deg) translate(2rem, 4rem);
-                                pointer-events: none;
-                            }
-        
-                            &:hover {
-                                color: red;
-        
-                                &:after {
-                                    opacity: 1;
-                                    transform: none;
-                                }
-                            }
+            i {
+                font-size: 2rem;
+                padding: 0.3rem;
+                cursor: pointer;
+                transition: 150ms all ease-out;
+
+                &:hover {
+                    color: $light-türkiz;
+                }
+
+                &.finished-icon {
+                    color: green;
+
+                    &:hover {
+                        color: lighten(green, 5);
+                    }
+                }
+                &.delete-todo-btn {
+                    position: relative;
+
+                    &::after {
+                        content: 'Delete ToDo';
+                        padding: 0.4rem 0.7rem;
+                        border: red 1.5px solid;
+                        border-radius: 5px;
+                        color: red;
+                        font-weight: 600;
+                        position: absolute;
+                        top: -120%;
+                        left: 2rem;
+                        font-size: 1.2rem;
+                        min-width: 10rem;
+                        opacity: 0;
+                        transition: all 200ms ease-out;
+                        transform: rotate(20deg) translate(2rem, 4rem);
+                        pointer-events: none;
+                    }
+
+                    &:hover {
+                        color: red;
+
+                        &:after {
+                            opacity: 1;
+                            transform: none;
                         }
                     }
+                }
             }
         }
     }
@@ -227,11 +272,6 @@ body {
     }
 }
 
-#popup-container{
-    height: 30rem;
-    width: 35rem;
-    position: absolute;
-    border: 1px solid $light-türkiz;
-    border-radius: 5px;
-    padding: 3rem;
+@keyframes revealItem{
+    100%{opacity: 1;}
 }

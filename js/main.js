@@ -22,13 +22,14 @@ todoForm.addEventListener('submit', e => {
     const todoTitle = document.getElementById('todo-title').value;
 
     const todoBody = document.getElementById('todo-description').value;
+    const dueDate = document.getElementById("urgent-todo-calendar-day").value;
+    const dueTime = document.getElementById("urgent-todo-calendar-time").value;
 
     if (validateTodoFields(todoTitle, todoBody)) {
 
         let oneTodo;
-    
         if(urgentCheckBox.checked === true){
-            oneTodo = new UrgentTodo(todoTitle, todoBody, new Date("2020-01-01"));
+            oneTodo = new UrgentTodo(todoTitle, todoBody, new Date(`${dueDate} ${dueTime}`));
         }else{
             oneTodo = new Todo(todoTitle, todoBody);
         }
@@ -41,6 +42,8 @@ todoForm.addEventListener('submit', e => {
         ui.paintOutTodo(oneTodo);
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
         document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
+        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseover', showTime));
+        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseleave', removeShowTime));
         ui.clearInput();
     } else {
         ui.displayMessage('Please fill in all fields!', 'error');
@@ -67,7 +70,7 @@ function statusFunction(e) {
 
 function removeTodo(e) {
     const ui = new UI();
-    let clickedTodoId = e.target.parentElement.parentElement.children[1].dataset.todoId;
+    let clickedTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(clickedTodo), 1);
     ui.deleteTodo(clickedTodo);
@@ -78,16 +81,31 @@ function removeTodo(e) {
 document.addEventListener('DOMContentLoaded', () => {
     const ui = new UI();
     Local_Storage.getTodosFromLocalStorage();
+    console.log(ToDoRepository.allTodos)
     if (ToDoRepository.allTodos.length !== 0) {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
         document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
+        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseover', showTime));
+        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseleave', removeShowTime));
     }
 
     urgentCheckBoxCover.addEventListener("click", (e) => {
         ui.checkBoxControl();
-        ui.handlePopup(e.srcElement);
+        
     })
 
     ui.checkTodoArray();
 });
+
+const showTime = function(e){
+    const ui = new UI();
+    let urgTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
+    let checkedTodo = ToDoRepository.allTodos.find(t => t.id == urgTodoId);
+
+    ui.showRemainingTime(checkedTodo, e.srcElement);
+}
+
+const removeShowTime = function(e){
+    e.target.firstChild.remove();
+}
