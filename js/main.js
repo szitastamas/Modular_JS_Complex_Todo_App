@@ -21,7 +21,7 @@ ui.todoForm.addEventListener('submit', e => {
     if (validateTodoFields(todoTitle, todoBody)) {
 
         let oneTodo;
-        if(urgentCheckBox.checked === true){
+        if(ui.urgentCheckBox.checked === true){
             oneTodo = new UrgentTodo(todoTitle, todoBody, new Date(`${dueDate} ${dueTime}`));
         }else{
             oneTodo = new Todo(todoTitle, todoBody);
@@ -57,7 +57,6 @@ function statusFunction(e) {
     clickedTodo.isFinished = !clickedTodo.isFinished;
     ui.updateTodoStatus(clickedTodo);
     ui.displayMessage(`Todo's status changed to: ${clickedTodo.isFinished ? 'Finished' : 'Unfinished'}`, 'success');
-    console.log(clickedTodo.isFinished ? 'Todo done!' : 'Todo is still to be finished...');
 }
 
 function removeTodo(e) {

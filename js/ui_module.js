@@ -142,14 +142,3 @@ export class UI {
 const handleCalendar = function(isUrgent){
         document.querySelector("[data-urgent-reveal]").dataset.urgentReveal = isUrgent;
 }
-
-// const urgentCheckBox = document.getElementById("urgent-todo-checkbox");
-// const urgentCheckBoxCover = document.querySelector(".checkbox-cover");
-// const todoForm = document.getElementById('add-todo-form');
-// const submitBtn = document.getElementById('add-todo-btn');
-// const todoTableBody = document.getElementById('todo-table-body');
-// const editTodoBtn = document.querySelectorAll(".edit-todo-btn");
-
-
-// <td><i class="fas fa-pencil-alt" id="edit-todo-btn"></i></td>
-// <td><i class="far fa-times-circle delete-icon"></i></td>
