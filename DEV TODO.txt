@@ -1,0 +1,7 @@
+- Handling Edit / Status / Delete icons without having to add multiple event listeners
+
+- Using the tr's todo-id attribute instead of the todo-id td --> no need to display todo id in the UI
+
+- Add edit window to UI
+
+- Handling moduling error with Firefox
