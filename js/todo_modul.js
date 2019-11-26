@@ -27,6 +27,10 @@ export class UrgentTodo extends Todo{
 
     calcRemainingTime(){
         let totalSecs = (this.whenIsItDue - this.creationDate) / 1000;
+
+        if(totalSecs < 0){
+            totalSecs = 0
+        }
         let totalMins = totalSecs / 60;
         let totalHours = totalMins / 60;
         let totalDays = totalHours / 24;
@@ -37,9 +41,9 @@ export class UrgentTodo extends Todo{
 
         const remTimeObject = {
             "days" : Math.floor(totalDays),
-            "hours" : remHours.toFixed(0),
-            "mins" : remMins.toFixed(0),
-            "secs" : remSecs.toFixed(0)
+            "hours" : Math.floor(remHours),
+            "mins" : Math.floor(remMins),
+            "secs" : Math.floor(remSecs)
         }
 
 

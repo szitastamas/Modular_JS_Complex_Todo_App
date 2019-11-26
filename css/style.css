@@ -211,18 +211,25 @@ body {
   position: absolute;
   color: white;
   font-weight: 600;
-  top: -10px;
+  top: -15px;
   padding: 1rem;
-  left: -200%;
+  left: -350%;
   font-size: 1.4rem;
   pointer-events: none;
-  -webkit-animation: revealItem 600ms forwards;
-          animation: revealItem 600ms forwards;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  -webkit-transition: 300ms all ease-out;
+  transition: 300ms all ease-out;
   opacity: 0;
   background: rgba(32, 32, 32, 0.801);
+  max-height: 0;
+}
+
+.todo-container #todo-table td.urgent-icon-td:hover .time-div,
+.todo-container #todo-table th.urgent-icon-td:hover .time-div {
+  max-height: 100%;
+  opacity: 1;
 }
 
 .todo-container #todo-table td i,

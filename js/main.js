@@ -75,25 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
         document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
         document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
-        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseover', showTime));
-        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseleave', removeShowTime));
     }
 
-    ui.urgentCheckBoxCover.addEventListener("click", (e) => {
+    ui.urgentCheckBoxCover.addEventListener("click", () => {
         ui.checkBoxControl();
-        
     })
 
     ui.checkTodoArray();
+    ui.updateTimer();
 });
 
-const showTime = function(e){
-    let urgTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
-    let checkedTodo = ToDoRepository.allTodos.find(t => t.id == urgTodoId);
 
-    ui.showRemainingTime(checkedTodo, e.srcElement);
-}
 
-const removeShowTime = function(e){
-    e.target.firstChild.remove();
-}

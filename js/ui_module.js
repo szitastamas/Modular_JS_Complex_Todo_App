@@ -32,7 +32,9 @@ export class UI {
             if(todo instanceof UrgentTodo){
                 tr.innerHTML = `
                     <td class="urgent-icon-td">
-                        <i class="far fa-clock clock-icon"></i>
+                        <i class="far fa-clock clock-icon">
+                            <div class="time-div">${this.findRemainingTime(todo)}</div>
+                        </i>
                     </td>
                     <td>${todoIcon}</td>
                     <td data-todo-id="${todo.id}">${todo.id}</td>
@@ -61,6 +63,7 @@ export class UI {
         if(document.querySelector(".empty-table-identifier")){
             document.querySelector(".empty-table-identifier").remove();
         }
+
     }
 
     displayMessage(message, className) {
@@ -120,25 +123,60 @@ export class UI {
         return isUrgentDataset;
     }
 
-    showRemainingTime(urgentTodo, tableElem){
-        const timeDiv = document.createElement("div");
+    findRemainingTime(urgentTodo){
 
         let remainingTime = urgentTodo.calcRemainingTime();
+        let isTimeUp = Object.values(remainingTime).reduce((total, val) => total += val, 0) === 0 ? true : false;
 
+        let output = "";
+            if(isTimeUp){
+                output = "Time is up."
+            }else{
+                output = `
+                        ${remainingTime.days == 0 ? "" : remainingTime.days + " day(s),"}
+                        ${remainingTime.hours < 10 ? "0"+remainingTime.hours : remainingTime.hours}:
+                        ${remainingTime.mins < 10 ? "0" + remainingTime.mins : remainingTime.mins}:
+                        ${remainingTime.secs < 10 ? "0" + remainingTime.secs : remainingTime.secs} left
+                    `;
+            }
 
-        timeDiv.className = "time-div";
-        timeDiv.innerHTML = `
-            ${remainingTime.days == 0 ? "" : remainingTime.days + " day(s),"}
-            ${remainingTime.hours < 10 ? "0"+remainingTime.hours : remainingTime.hours}:
-            ${remainingTime.mins < 10 ? "0" + remainingTime.mins : remainingTime.mins}:
-            ${remainingTime.secs < 10 ? "0" + remainingTime.secs : remainingTime.secs} left
-        `;
-
-        tableElem.appendChild(timeDiv);
-        
+        return output;
     }
 
+    updateTimer(){
+
+        function updateTime(todo){
+            todo.creationDate = new Date();
+        }
+    
+        setInterval(() => {
+            let timeDivs = document.querySelectorAll(".time-div");
+        
+            if(timeDivs.length != 0){
+                timeDivs.forEach(div => {
+                    let trParent = div.parentElement.parentElement.parentElement;
+                    let todoID = trParent.id.split('-')[1];
+                    let currentTodo = null;
+    
+                    for(let todo of ToDoRepository.allTodos){
+                        if(todoID == todo.id){
+                            currentTodo = todo;
+                        }
+                    }
+    
+                    let isTimeUp = Object.values(currentTodo.calcRemainingTime()).reduce((total, val) => total += val, 0) === 0 ? true : false;
+    
+                    if(isTimeUp === false){
+                        updateTime(currentTodo);
+                        div.innerHTML = this.findRemainingTime(currentTodo);
+                    }
+                })
+            }
+        }, 1000)
+    }
 }
 const handleCalendar = function(isUrgent){
         document.querySelector("[data-urgent-reveal]").dataset.urgentReveal = isUrgent;
 }
+
+

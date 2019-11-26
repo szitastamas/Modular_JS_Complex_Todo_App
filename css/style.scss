@@ -176,15 +176,22 @@ body {
                     position: absolute;
                     color: white;
                     font-weight: 600;
-                    top: -10px;
+                    top: -15px;
                     padding: 1rem;
-                    left: -200%;
+                    left: -350%;
                     font-size: 1.4rem;
                     pointer-events: none;
-                    animation: revealItem 600ms forwards;
+                    //animation: revealItem 600ms forwards;
                     width: max-content;
+                    transition: 300ms all ease-out;
                     opacity: 0;
                     background: rgba(32, 32, 32, 0.801);
+                    max-height: 0;
+                }
+
+                &:hover .time-div{
+                    max-height: 100%;
+                    opacity: 1;
                 }
             }
             
