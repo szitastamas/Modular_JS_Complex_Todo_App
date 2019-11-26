@@ -1,6 +1,5 @@
-import { Todo, UrgentTodo } from './todo_modul.js';
+import { Todo, UrgentTodo, ToDoRepository } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
-import { ToDoRepository } from './todo_modul.js';
 
 export class UI {
     constructor(){
@@ -10,6 +9,7 @@ export class UI {
         this.submitBtn = document.getElementById('add-todo-btn');
         this.todoTableBody = document.getElementById('todo-table-body');
         this.editTodoBtn = document.querySelectorAll(".edit-todo-btn");
+        this.todoTableRows = [];
     }
 
     paintOutTodo(todo) {
@@ -21,11 +21,11 @@ export class UI {
         tr.id = `todo-${todo.id}`;
         let shortBody = "";
 
-        if(todo.todoBody.length > 15){
-            shortBody = `${todo.todoBody.substring(0, 14)}...`;
+        if(todo.todoBody.length > 25){
+            shortBody = `${todo.todoBody.substring(0, 24)}...`;
         }
 
-        const todoIcon = todo.isFinished
+        const todoStatusIcon = todo.isFinished
             ? '<i class="far fa-check-circle finished-icon status-icon"></i>'
             : '<i class="fas fa-clipboard-list unfinished-icon status-icon"></i>';
 
@@ -36,10 +36,12 @@ export class UI {
                             <div class="time-div">${this.findRemainingTime(todo)}</div>
                         </i>
                     </td>
-                    <td>${todoIcon}</td>
-                    <td data-todo-id="${todo.id}">${todo.id}</td>
+                    <td>${todoStatusIcon}</td>
                     <td>${todo.title}</td>
-                    <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
+                    <td>${todo.todoBody.length > 25 ? shortBody : todo.todoBody}</td>
+                    <td>
+                        <i class="far fa-eye"></i>
+                    </td>
                     <td>
                         <i class="far fa-times-circle delete-todo-btn"></i>
                     </td>`
@@ -48,17 +50,20 @@ export class UI {
 
                 tr.innerHTML = `
                     <td></td>
-                    <td>${todoIcon}</td>
-                    <td data-todo-id="${todo.id}">${todo.id}</td>
+                    <td>${todoStatusIcon}</td>
                     <td>${todo.title}</td>
-                    <td>${todo.todoBody.length > 15 ? shortBody : todo.todoBody}</td>
+                    <td>${todo.todoBody.length > 25 ? shortBody : todo.todoBody}</td>
+                    <td>
+                        <i class="far fa-eye"></i>
+                    </td>
                     <td>
                         <i class="far fa-times-circle delete-todo-btn"></i>
                     </td>`
             }
 
         ;
-
+        
+        this.todoTableRows.push(tr);
         this.todoTableBody.prepend(tr);
         if(document.querySelector(".empty-table-identifier")){
             document.querySelector(".empty-table-identifier").remove();
@@ -78,38 +83,38 @@ export class UI {
     }
 
     updateTodoStatus(todo) {
-        let todoTds = document.querySelectorAll('[data-todo-id]');
 
-        let toBeUpdatedTodoField = Array.from(todoTds).find(t => t.dataset.todoId == todo.id).previousElementSibling.firstChild;
+        todo.isFinished = !todo.isFinished;
+        let toBeUpdatedTodoField = this.todoTableRows.find(row => row.id.split("-")[1] == todo.id).querySelector(".status-icon");
 
         if (todo.isFinished) {
-            toBeUpdatedTodoField.classList = 'far fa-check-circle finished-icon status-icon';
+            toBeUpdatedTodoField.className = 'far fa-check-circle finished-icon status-icon';
         } else {
-            toBeUpdatedTodoField.classList = 'fas fa-clipboard-list unfinished-icon status-icon';
+            toBeUpdatedTodoField.className = 'fas fa-clipboard-list unfinished-icon status-icon';
         }
 
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
     }
 
     deleteTodo(todo) {
-        let todoTds = document.querySelectorAll('[data-todo-id]');
-        console.log(todoTds)
-        let toBeDeletedField = Array.from(todoTds).find(t => t.dataset.todoId == todo.id).parentElement;
 
-        toBeDeletedField.remove();
+        this.todoTableRows.find(row => row.id.split("-")[1] == todo.id).remove();
 
-        this.checkTodoArray();
+        this.checkTodoArrayForEmpty();
     }
 
 
     clearInput(){
         this.todoForm.querySelectorAll('input[type="text"]').forEach(input => input.value ="");
+        this.urgentCheckBox.checked = false;
+        this.urgentCheckBoxCover.dataset.urgentCbCheck = false;
+        handleCalendar(false);
         console.log("Input fields cleared.")
     }
 
-    checkTodoArray(){
+    checkTodoArrayForEmpty(){
         if(ToDoRepository.allTodos.length === 0){
-            todoTableBody.innerHTML = `<tr class="empty-table-identifier"><td colspan="6">There are no todos to show...</td></tr>`;
+            this.todoTableBody.innerHTML = `<tr class="empty-table-identifier"><td colspan="6">There are no todos to show...</td></tr>`;
         }
     }
 
@@ -175,6 +180,8 @@ export class UI {
         }, 1000)
     }
 }
+
+
 const handleCalendar = function(isUrgent){
         document.querySelector("[data-urgent-reveal]").dataset.urgentReveal = isUrgent;
 }

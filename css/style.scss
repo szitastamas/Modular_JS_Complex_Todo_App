@@ -12,17 +12,19 @@ body {
 }
 
 .todo-container {
-    width: 100%;
+    width: 75%;
     padding: 5rem;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
+    margin: auto;
 
     #add-todo-form {
         border: 2px solid $dark-türkiz;
-        padding: 5rem 2rem 4rem 2rem;
+        padding: 5rem 2rem 5rem 2rem;
         border-radius: 10px;
         z-index: 3;
+        width: 30%;
         position: relative;
         h2 {
             font-size: 2.1rem;
@@ -137,19 +139,18 @@ body {
                 &::after {
                     content: 'Finish / Unfinish';
                     padding: 0.4rem 0.7rem;
-                    //background: $dark-türkiz;
                     border: $dark-türkiz 1.5px solid;
                     border-radius: 5px;
                     color: $dark-türkiz;
                     font-weight: 600;
                     position: absolute;
-                    top: -120%;
+                    top: -90%;
                     left: -12rem;
                     font-size: 1.2rem;
                     min-width: 10rem;
                     opacity: 0;
                     transition: all 200ms ease-out;
-                    transform: rotate(-20deg) translate(2rem, 4rem);
+                    transform: rotate(-40deg) translate(-2rem, 4rem);
                     pointer-events: none;
                 }
 
@@ -177,21 +178,21 @@ body {
                     color: white;
                     font-weight: 600;
                     top: -15px;
-                    padding: 1rem;
-                    left: -350%;
+                    padding: .5rem 1rem;
                     font-size: 1.4rem;
                     pointer-events: none;
-                    //animation: revealItem 600ms forwards;
                     width: max-content;
                     transition: 300ms all ease-out;
+                    transform-origin: center right;
                     opacity: 0;
-                    background: rgba(32, 32, 32, 0.801);
+                    background: rgba(32, 32, 32, 0.901);
                     max-height: 0;
                 }
 
                 &:hover .time-div{
                     max-height: 100%;
                     opacity: 1;
+                    z-index: 5;
                 }
             }
             
@@ -223,13 +224,13 @@ body {
                         color: red;
                         font-weight: 600;
                         position: absolute;
-                        top: -120%;
+                        top: -80%;
                         left: 2rem;
                         font-size: 1.2rem;
                         min-width: 10rem;
                         opacity: 0;
                         transition: all 200ms ease-out;
-                        transform: rotate(20deg) translate(2rem, 4rem);
+                        transform: rotate(40deg) translate(2rem, 4rem);
                         pointer-events: none;
                     }
 

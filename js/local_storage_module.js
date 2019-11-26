@@ -12,9 +12,13 @@ export class Local_Storage {
 
         Array.from(todosFromLS).forEach(el => {
             if(el.whenIsItDue){
-                ToDoRepository.allTodos.push(new UrgentTodo(el.title, el.todoBody, el.whenIsItDue));
+                const newUrgTodo = new UrgentTodo(el.title, el.todoBody, el.whenIsItDue);
+                newUrgTodo.isFinished = el.isFinished;
+                ToDoRepository.allTodos.push(newUrgTodo);
             }else{
-                ToDoRepository.allTodos.push(new Todo(el.title, el.todoBody));
+                const newTodo = new Todo(el.title, el.todoBody);
+                newTodo.isFinished = el.isFinished;
+                ToDoRepository.allTodos.push(newTodo);
             }
         })
 

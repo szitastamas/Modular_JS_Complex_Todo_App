@@ -4,8 +4,7 @@ import { Local_Storage } from './local_storage_module.js';
 
 const ui = new UI();
 
-
-
+let tableRows = null;
 
 // Submitting a Todo
 ui.todoForm.addEventListener('submit', e => {
@@ -29,18 +28,14 @@ ui.todoForm.addEventListener('submit', e => {
 
         ToDoRepository.allTodos.push(oneTodo);
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
-
-        console.log(ToDoRepository.allTodos);
+        ui.clearInput();
         ui.displayMessage('Todo successfully added', 'success');
         ui.paintOutTodo(oneTodo);
-        document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
-        document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
-        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseover', showTime));
-        document.querySelectorAll('.clock-icon').forEach(i => i.addEventListener('mouseleave', removeShowTime));
-        ui.clearInput();
     } else {
         ui.displayMessage('Please fill in all fields!', 'error');
     }
+
+    ui.todoTableRows.forEach(row => row.addEventListener("click", handleTodoItemClick))
 });
 
 function validateTodoFields(field1, field2) {
@@ -52,15 +47,17 @@ function validateTodoFields(field1, field2) {
 }
 
 function statusFunction(e) {
-    let clickedTodoId = e.target.parentElement.nextElementSibling.textContent;
+    let clickedTodoId = e.target.parentElement.parentElement.id.split("-")[1];
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
-    clickedTodo.isFinished = !clickedTodo.isFinished;
     ui.updateTodoStatus(clickedTodo);
     ui.displayMessage(`Todo's status changed to: ${clickedTodo.isFinished ? 'Finished' : 'Unfinished'}`, 'success');
+    console.log(clickedTodo)
 }
 
 function removeTodo(e) {
-    let clickedTodoId = e.target.parentElement.parentElement.querySelector("[data-todo-id]").dataset.todoId;
+
+    const clickedTodoId = e.target.parentElement.parentElement.id.split("-")[1];
+
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(clickedTodo), 1);
     ui.deleteTodo(clickedTodo);
@@ -70,20 +67,29 @@ function removeTodo(e) {
 
 document.addEventListener('DOMContentLoaded', () => {
     Local_Storage.getTodosFromLocalStorage();
-    console.log(ToDoRepository.allTodos)
     if (ToDoRepository.allTodos.length !== 0) {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
-        document.querySelectorAll('.status-icon').forEach(i => i.addEventListener('click', statusFunction));
-        document.querySelectorAll('.delete-todo-btn').forEach(i => i.addEventListener('click', removeTodo));
+
+        ui.todoTableRows.forEach(row => row.addEventListener("click", handleTodoItemClick))
     }
 
     ui.urgentCheckBoxCover.addEventListener("click", () => {
         ui.checkBoxControl();
     })
 
-    ui.checkTodoArray();
+
+    ui.checkTodoArrayForEmpty();
     ui.updateTimer();
 });
 
 
+function handleTodoItemClick(e){
 
+    if(e.srcElement.classList.contains("status-icon")){
+        statusFunction(e);
+    }else if(e.srcElement.classList.contains("delete-todo-btn")){
+        removeTodo(e)
+    }else if(e.srcElement.classList.contains("edit-todo-btn")){
+        console.log("Editing started...")
+    }
+}
