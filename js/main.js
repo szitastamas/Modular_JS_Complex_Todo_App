@@ -10,19 +10,17 @@ let tableRows = null;
 ui.todoForm.addEventListener('submit', e => {
     e.preventDefault();
 
-
     const todoTitle = document.getElementById('todo-title').value;
 
     const todoBody = document.getElementById('todo-description').value;
-    const dueDate = document.getElementById("urgent-todo-calendar-day").value;
-    const dueTime = document.getElementById("urgent-todo-calendar-time").value;
+    const dueDate = document.getElementById('urgent-todo-calendar-day').value;
+    const dueTime = document.getElementById('urgent-todo-calendar-time').value;
 
     if (validateTodoFields(todoTitle, todoBody)) {
-
         let oneTodo;
-        if(ui.urgentCheckBox.checked === true){
+        if (ui.urgentCheckBox.checked === true) {
             oneTodo = new UrgentTodo(todoTitle, todoBody, new Date(`${dueDate} ${dueTime}`));
-        }else{
+        } else {
             oneTodo = new Todo(todoTitle, todoBody);
         }
 
@@ -35,7 +33,7 @@ ui.todoForm.addEventListener('submit', e => {
         ui.displayMessage('Please fill in all fields!', 'error');
     }
 
-    ui.todoTableRows.forEach(row => row.addEventListener("click", handleTodoItemClick))
+    ui.todoTableRows.forEach(row => row.addEventListener('click', handleTodoItemClick));
 });
 
 function validateTodoFields(field1, field2) {
@@ -47,16 +45,15 @@ function validateTodoFields(field1, field2) {
 }
 
 function statusFunction(e) {
-    let clickedTodoId = e.target.parentElement.parentElement.id.split("-")[1];
+    let clickedTodoId = e.target.parentElement.parentElement.id.split('-')[1];
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     ui.updateTodoStatus(clickedTodo);
     ui.displayMessage(`Todo's status changed to: ${clickedTodo.isFinished ? 'Finished' : 'Unfinished'}`, 'success');
-    console.log(clickedTodo)
+    console.log(clickedTodo);
 }
 
 function removeTodo(e) {
-
-    const clickedTodoId = e.target.parentElement.parentElement.id.split("-")[1];
+    const clickedTodoId = e.target.parentElement.parentElement.id.split('-')[1];
 
     const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
     ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(clickedTodo), 1);
@@ -70,26 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ToDoRepository.allTodos.length !== 0) {
         ToDoRepository.allTodos.forEach(todo => ui.paintOutTodo(todo));
 
-        ui.todoTableRows.forEach(row => row.addEventListener("click", handleTodoItemClick))
+        ui.todoTableRows.forEach(row => row.addEventListener('click', handleTodoItemClick));
     }
 
-    ui.urgentCheckBoxCover.addEventListener("click", () => {
+    ui.urgentCheckBoxCover.addEventListener('click', () => {
         ui.checkBoxControl();
-    })
-
+    });
 
     ui.checkTodoArrayForEmpty();
     ui.updateTimer();
 });
 
-
-function handleTodoItemClick(e){
-
-    if(e.srcElement.classList.contains("status-icon")){
+function handleTodoItemClick(e) {
+    if (e.srcElement.classList.contains('status-icon')) {
         statusFunction(e);
-    }else if(e.srcElement.classList.contains("delete-todo-btn")){
-        removeTodo(e)
-    }else if(e.srcElement.classList.contains("edit-todo-btn")){
-        console.log("Editing started...")
+    } else if (e.srcElement.classList.contains('delete-todo-btn')) {
+        removeTodo(e);
+    } else if (e.srcElement.classList.contains('edit-todo-btn')) {
+        console.log('Editing started...');
+        ui.changeState('edit');
     }
 }

@@ -64,7 +64,7 @@ body {
   background: #0ca5ff;
 }
 
-.todo-container #add-todo-form .urgent-checkbox-field .checkbox-cover[data-urgent-cb-check="true"] {
+.todo-container #add-todo-form .urgent-checkbox-field .checkbox-cover[data-urgent-cb-check='true'] {
   background: #004872;
   -webkit-box-shadow: inset 0 0 0 2px white;
           box-shadow: inset 0 0 0 2px white;
@@ -109,7 +109,7 @@ body {
 .todo-container #add-todo-form textarea#add-todo-btn i,
 .todo-container #add-todo-form button#add-todo-btn i {
   font-size: 1.7rem;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .todo-container #add-todo-form input#add-todo-btn:hover,
@@ -132,7 +132,7 @@ body {
   opacity: 0;
 }
 
-.todo-container #add-todo-form .urgent-todo-calendar-container[data-urgent-reveal="true"] {
+.todo-container #add-todo-form .urgent-todo-calendar-container[data-urgent-reveal='true'] {
   display: block;
   -webkit-animation: revealItem 500ms forwards;
           animation: revealItem 500ms forwards;
@@ -144,8 +144,16 @@ body {
 }
 
 .todo-container #todo-table {
+  -webkit-transition: 600ms all ease-out;
+  transition: 600ms all ease-out;
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.todo-container #todo-table.editing-state {
+  opacity: 0;
+  -webkit-transform: scale(0);
+          transform: scale(0);
 }
 
 .todo-container #todo-table #todo-table-body .urgent {
@@ -162,7 +170,7 @@ body {
 
 .todo-container #todo-table #todo-table-body .status-icon {
   position: relative;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
 
 .todo-container #todo-table #todo-table-body .status-icon::after {
@@ -214,7 +222,7 @@ body {
   color: white;
   font-weight: 600;
   top: -15px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 1.4rem;
   pointer-events: none;
   width: -webkit-max-content;

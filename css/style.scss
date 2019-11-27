@@ -31,40 +31,39 @@ body {
             margin-bottom: 6rem;
         }
 
-        .urgent-checkbox-field{
+        .urgent-checkbox-field {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             position: relative;
 
-            .checkbox-cover{
+            .checkbox-cover {
                 height: 15px;
                 width: 15px;
                 position: absolute;
-                border: .7px $light-türkiz solid;
+                border: 0.7px $light-türkiz solid;
                 cursor: pointer;
                 transition: 150ms background ease-out;
 
-                &:hover{
+                &:hover {
                     background: lighten($light-türkiz, 15);
                 }
 
-                &[data-urgent-cb-check="true"]{
+                &[data-urgent-cb-check='true'] {
                     background: $dark-türkiz;
                     box-shadow: inset 0 0 0 2px white;
                 }
             }
 
-            label{
+            label {
                 margin: 0;
                 padding: 0;
             }
 
-            #urgent-todo-checkbox{
+            #urgent-todo-checkbox {
                 margin: 0 1rem 0 0;
                 width: auto;
                 visibility: hidden;
-
             }
         }
 
@@ -75,17 +74,17 @@ body {
             transition: 100ms all ease-out;
             width: 100%;
 
-            &#add-todo-btn{
+            &#add-todo-btn {
                 margin-top: 2rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                i{
+                i {
                     font-size: 1.7rem;
-                    margin-right: .5rem;
+                    margin-right: 0.5rem;
                 }
 
-                &:hover{
+                &:hover {
                     background: $dark-türkiz;
                     color: whitesmoke;
                 }
@@ -97,36 +96,40 @@ body {
             }
         }
 
+        .urgent-todo-calendar-container {
+            margin: 1rem 0;
+            display: none;
+            opacity: 0;
 
-            .urgent-todo-calendar-container{
-                margin: 1rem 0;
-                display: none;
-                opacity: 0;
-
-                &[data-urgent-reveal="true"]{
-                    display: block;
-                    animation: revealItem 500ms forwards;
-                }
-
-                #urgent-todo-calendar-day,
-                #urgent-todo-calendar-time{
-                    padding: 1rem;
-                }
+            &[data-urgent-reveal='true'] {
+                display: block;
+                animation: revealItem 500ms forwards;
             }
+
+            #urgent-todo-calendar-day,
+            #urgent-todo-calendar-time {
+                padding: 1rem;
+            }
+        }
     }
 
     #todo-table {
+        transition: 600ms all ease-out;
+        &.editing-state {
+            opacity: 0;
+            transform: scale(0);
+        }
 
         border-collapse: collapse;
         border-spacing: 0;
         #todo-table-body {
-            .urgent{
+            .urgent {
                 background: lighten($light-türkiz, 55);
                 border: none;
                 font-weight: 600;
                 position: relative;
 
-                td:first-child{
+                td:first-child {
                     background: white;
                     border: none;
                 }
@@ -134,7 +137,7 @@ body {
 
             .status-icon {
                 position: relative;
-                margin: 0 .5rem;
+                margin: 0 0.5rem;
 
                 &::after {
                     content: 'Finish / Unfinish';
@@ -166,19 +169,19 @@ body {
             text-align: center;
             width: auto;
             margin: 0;
-            &:first-child{
+            &:first-child {
                 border-bottom: none;
             }
 
-            &.urgent-icon-td{
+            &.urgent-icon-td {
                 position: relative;
 
-                .time-div{
+                .time-div {
                     position: absolute;
                     color: white;
                     font-weight: 600;
                     top: -15px;
-                    padding: .5rem 1rem;
+                    padding: 0.5rem 1rem;
                     font-size: 1.4rem;
                     pointer-events: none;
                     width: max-content;
@@ -189,13 +192,13 @@ body {
                     max-height: 0;
                 }
 
-                &:hover .time-div{
+                &:hover .time-div {
                     max-height: 100%;
                     opacity: 1;
                     z-index: 5;
                 }
             }
-            
+
             i {
                 font-size: 2rem;
                 padding: 0.3rem;
@@ -280,6 +283,8 @@ body {
     }
 }
 
-@keyframes revealItem{
-    100%{opacity: 1;}
+@keyframes revealItem {
+    100% {
+        opacity: 1;
+    }
 }
