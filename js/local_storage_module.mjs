@@ -1,5 +1,5 @@
 
-import { Todo, UrgentTodo, ToDoRepository } from "./todo_modul.js";
+import { Todo, UrgentTodo, ToDoRepository } from "./todo_modul.mjs";
 
 
 export class Local_Storage {

@@ -1,6 +1,6 @@
-import { UI } from './ui_module.js';
-import { Todo, ToDoRepository, UrgentTodo } from './todo_modul.js';
-import { Local_Storage } from './local_storage_module.js';
+import { UI } from './ui_module.mjs';
+import { Todo, ToDoRepository, UrgentTodo } from './todo_modul.mjs';
+import { Local_Storage } from './local_storage_module.mjs';
 
 export const ui = new UI();
 

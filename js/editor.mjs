@@ -1,6 +1,6 @@
-import { Todo, ToDoRepository, UrgentTodo } from "./todo_modul.js"
-import { ui } from "./main.js"
-import { Local_Storage } from "./local_storage_module.js"
+import { Todo, ToDoRepository, UrgentTodo } from "./todo_modul.mjs"
+import { ui } from "./main.mjs"
+import { Local_Storage } from "./local_storage_module.mjs"
 
 export class EditorUI {
 
