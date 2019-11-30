@@ -7,11 +7,13 @@
 
 body {
   color: #004872;
+  background: white;
 }
 
 .todo-container {
-  width: 75%;
-  padding: 5rem;
+  width: 100%;
+  min-height: 100vh;
+  padding: 5rem 15rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -20,7 +22,70 @@ body {
           align-items: flex-start;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin: auto;
+  position: relative;
+  -webkit-transition: 200ms all ease-out;
+  transition: 200ms all ease-out;
+  background: white;
+  z-index: 1;
+}
+
+.todo-container #overlay {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.todo-container input,
+.todo-container textarea,
+.todo-container button {
+  border: #004872 1px solid;
+  -webkit-transition: 100ms all ease-out;
+  transition: 100ms all ease-out;
+  width: 100%;
+}
+
+.todo-container input#add-todo-btn,
+.todo-container textarea#add-todo-btn,
+.todo-container button#add-todo-btn {
+  margin-top: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.todo-container input#add-todo-btn i,
+.todo-container textarea#add-todo-btn i,
+.todo-container button#add-todo-btn i {
+  font-size: 1.7rem;
+  margin-right: 0.5rem;
+}
+
+.todo-container input#add-todo-btn:hover,
+.todo-container textarea#add-todo-btn:hover,
+.todo-container button#add-todo-btn:hover {
+  background: #004872;
+  color: whitesmoke;
+}
+
+.todo-container input:hover,
+.todo-container textarea:hover,
+.todo-container button:hover {
+  color: #0078bf;
+  border-color: #0078bf;
 }
 
 .todo-container #add-todo-form {
@@ -28,7 +93,8 @@ body {
   padding: 5rem 2rem 5rem 2rem;
   border-radius: 10px;
   z-index: 3;
-  width: 30%;
+  max-width: 350px;
+  min-width: 250px;
   position: relative;
 }
 
@@ -81,51 +147,6 @@ body {
   visibility: hidden;
 }
 
-.todo-container #add-todo-form input,
-.todo-container #add-todo-form textarea,
-.todo-container #add-todo-form button {
-  border: #004872 1px solid;
-  -webkit-transition: 100ms all ease-out;
-  transition: 100ms all ease-out;
-  width: 100%;
-}
-
-.todo-container #add-todo-form input#add-todo-btn,
-.todo-container #add-todo-form textarea#add-todo-btn,
-.todo-container #add-todo-form button#add-todo-btn {
-  margin-top: 2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.todo-container #add-todo-form input#add-todo-btn i,
-.todo-container #add-todo-form textarea#add-todo-btn i,
-.todo-container #add-todo-form button#add-todo-btn i {
-  font-size: 1.7rem;
-  margin-right: 0.5rem;
-}
-
-.todo-container #add-todo-form input#add-todo-btn:hover,
-.todo-container #add-todo-form textarea#add-todo-btn:hover,
-.todo-container #add-todo-form button#add-todo-btn:hover {
-  background: #004872;
-  color: whitesmoke;
-}
-
-.todo-container #add-todo-form input:hover,
-.todo-container #add-todo-form textarea:hover,
-.todo-container #add-todo-form button:hover {
-  color: #0078bf;
-  border-color: #0078bf;
-}
-
 .todo-container #add-todo-form .urgent-todo-calendar-container {
   margin: 1rem 0;
   display: none;
@@ -144,16 +165,10 @@ body {
 }
 
 .todo-container #todo-table {
-  -webkit-transition: 600ms all ease-out;
-  transition: 600ms all ease-out;
+  -webkit-transition: 500ms all ease-out;
+  transition: 500ms all ease-out;
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-.todo-container #todo-table.editing-state {
-  opacity: 0;
-  -webkit-transform: scale(0);
-          transform: scale(0);
 }
 
 .todo-container #todo-table #todo-table-body .urgent {
@@ -306,6 +321,61 @@ body {
           transform: none;
 }
 
+.todo-container #edit-div-window {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 6;
+  margin: 2rem auto;
+  background: white;
+  border: #0078bf 1px solid;
+  border-radius: 10px;
+  padding: 2rem;
+  color: #0078bf;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -45px);
+          transform: translate(-50%, -45px);
+  -webkit-animation: openEditor 400ms forwards;
+          animation: openEditor 400ms forwards;
+}
+
+.todo-container #edit-div-window .todo-edit-card-title {
+  font-weight: 600;
+  text-align: center;
+}
+
+.todo-container #edit-div-window #edit-todo-textarea {
+  width: 100%;
+}
+
+.todo-container #edit-div-window .edit-todo-btn-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5rem;
+}
+
+.todo-container #edit-div-window .edit-todo-details {
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: .4rem .7rem;
+  border: 1px solid #0078bf;
+  border-radius: 10px;
+}
+
+.todo-container #edit-div-window .edit-todo-details .todo-detail {
+  padding: 0;
+  margin: 0;
+}
+
 .alert {
   text-align: center;
   -webkit-transition: 400ms all ease-out;
@@ -357,6 +427,22 @@ body {
 
 @keyframes revealItem {
   100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes openEditor {
+  100% {
+    -webkit-transform: translate(-50%, 20px);
+            transform: translate(-50%, 20px);
+    opacity: 1;
+  }
+}
+
+@keyframes openEditor {
+  100% {
+    -webkit-transform: translate(-50%, 20px);
+            transform: translate(-50%, 20px);
     opacity: 1;
   }
 }

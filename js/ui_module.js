@@ -1,8 +1,10 @@
 import { Todo, UrgentTodo, ToDoRepository } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
+import { EditorUI } from "./editor.js"
 
 export class UI {
     constructor() {
+        this.overlay = document.getElementById("overlay");
         this.urgentCheckBox = document.getElementById('urgent-todo-checkbox');
         this.urgentCheckBoxCover = document.querySelector('.checkbox-cover');
         this.todoForm = document.getElementById('add-todo-form');
@@ -46,7 +48,7 @@ export class UI {
         trBody += `
             <td>${todoStatusIcon}</td>
             <td>${todo.title}</td>
-            <td>${todo.todoBody.length > 25 ? shortBody : todo.todoBody}</td>
+            <td class="tr-todo-description" title="${todo.todoBody}">${todo.todoBody.length > 25 ? shortBody : todo.todoBody}</td>
             <td>
                 <i class="far fa-eye edit-todo-btn"></i>
             </td>
@@ -165,22 +167,26 @@ export class UI {
     }
 
     changeState(state, todo) {
+
+        this.state = state;
+
         if (state === 'edit') {
             console.log('Editing state triggered.');
-            this.todoTable.classList.add('editing-state');
+            EditorUI.createSelf(todo);
+            this.todoTable.classList.add("editing-state")
+            this.todoForm.querySelectorAll("input").forEach(f => f.setAttribute("disabled", "true"))
+            this.overlay.style.display = "block";
+            
         } else {
-            this.todoTable.classList.remove('editing-state');
+            this.overlay.style.display = "none";
+            this.todoForm.querySelectorAll("input").forEach(f => f.removeAttribute("disabled"))
+            this.todoTable.style.display = "block";
+            this.todoTable.classList.remove("editing-state");
         }
     }
 }
 
-class Edit {
-    constructor(todo) {
-        this.todo = todo;
-    }
 
-    createSelf() {}
-}
 
 const handleCalendar = function(isUrgent) {
     document.querySelector('[data-urgent-reveal]').dataset.urgentReveal = isUrgent;

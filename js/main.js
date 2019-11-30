@@ -2,7 +2,7 @@ import { UI } from './ui_module.js';
 import { Todo, ToDoRepository, UrgentTodo } from './todo_modul.js';
 import { Local_Storage } from './local_storage_module.js';
 
-const ui = new UI();
+export const ui = new UI();
 
 let tableRows = null;
 
@@ -44,20 +44,16 @@ function validateTodoFields(field1, field2) {
     }
 }
 
-function statusFunction(e) {
-    let clickedTodoId = e.target.parentElement.parentElement.id.split('-')[1];
-    const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
-    ui.updateTodoStatus(clickedTodo);
-    ui.displayMessage(`Todo's status changed to: ${clickedTodo.isFinished ? 'Finished' : 'Unfinished'}`, 'success');
-    console.log(clickedTodo);
+function statusFunction(todo) {
+    
+    ui.updateTodoStatus(todo);
+    ui.displayMessage(`Todo's status changed to: ${todo.isFinished ? 'Finished' : 'Unfinished'}`, 'success');
 }
 
-function removeTodo(e) {
-    const clickedTodoId = e.target.parentElement.parentElement.id.split('-')[1];
-
-    const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
-    ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(clickedTodo), 1);
-    ui.deleteTodo(clickedTodo);
+function removeTodo(todo) {
+   
+    ToDoRepository.allTodos.splice(ToDoRepository.allTodos.indexOf(todo), 1);
+    ui.deleteTodo(todo);
     ui.displayMessage('Todo deleted.', 'success');
     Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
 }
@@ -76,15 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ui.checkTodoArrayForEmpty();
     ui.updateTimer();
+    
 });
 
 function handleTodoItemClick(e) {
+
+    let clickedTodoId = e.target.parentElement.parentElement.id.split('-')[1];
+    const clickedTodo = ToDoRepository.allTodos.find(todo => todo.id == clickedTodoId);
+
+
     if (e.srcElement.classList.contains('status-icon')) {
-        statusFunction(e);
+        statusFunction(clickedTodo);
     } else if (e.srcElement.classList.contains('delete-todo-btn')) {
-        removeTodo(e);
+        removeTodo(clickedTodo);
     } else if (e.srcElement.classList.contains('edit-todo-btn')) {
-        console.log('Editing started...');
-        ui.changeState('edit');
+        ui.changeState('edit', clickedTodo);
     }
 }

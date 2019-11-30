@@ -9,22 +9,71 @@ $light-türkiz: lighten($dark-türkiz, 15);
 
 body {
     color: $dark-türkiz;
+    background: white;
 }
 
 .todo-container {
-    width: 75%;
-    padding: 5rem;
+    width: 100%;
+    min-height: 100vh;
+    padding: 5rem 15rem;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
+    flex-wrap: wrap;
     margin: auto;
+    position: relative;
+    transition: 200ms all ease-out;
+    background: white;
+    z-index: 1;
+
+
+    #overlay{
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, .5);
+        top: 0;
+        left: 0;
+        z-index: 5;
+    }
+
+    input,
+    textarea,
+    button {
+        border: $dark-türkiz 1px solid;
+        transition: 100ms all ease-out;
+        width: 100%;
+
+        &#add-todo-btn {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            i {
+                font-size: 1.7rem;
+                margin-right: 0.5rem;
+            }
+
+            &:hover {
+                background: $dark-türkiz;
+                color: whitesmoke;
+            }
+        }
+
+        &:hover {
+            color: $light-türkiz;
+            border-color: $light-türkiz;
+        }
+    }
 
     #add-todo-form {
         border: 2px solid $dark-türkiz;
         padding: 5rem 2rem 5rem 2rem;
         border-radius: 10px;
         z-index: 3;
-        width: 30%;
+        max-width: 350px;
+        min-width: 250px;
         position: relative;
         h2 {
             font-size: 2.1rem;
@@ -67,34 +116,7 @@ body {
             }
         }
 
-        input,
-        textarea,
-        button {
-            border: $dark-türkiz 1px solid;
-            transition: 100ms all ease-out;
-            width: 100%;
 
-            &#add-todo-btn {
-                margin-top: 2rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                i {
-                    font-size: 1.7rem;
-                    margin-right: 0.5rem;
-                }
-
-                &:hover {
-                    background: $dark-türkiz;
-                    color: whitesmoke;
-                }
-            }
-
-            &:hover {
-                color: $light-türkiz;
-                border-color: $light-türkiz;
-            }
-        }
 
         .urgent-todo-calendar-container {
             margin: 1rem 0;
@@ -114,10 +136,10 @@ body {
     }
 
     #todo-table {
-        transition: 600ms all ease-out;
+        transition: 500ms all ease-out;
         &.editing-state {
-            opacity: 0;
-            transform: scale(0);
+            //opacity: 0;
+            //transform: scale(0);
         }
 
         border-collapse: collapse;
@@ -249,6 +271,54 @@ body {
             }
         }
     }
+
+
+    #edit-div-window{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: 6;
+        margin: 2rem auto;
+        background: white;
+        border: $light-türkiz 1px solid;
+        border-radius: 10px;
+        padding: 2rem;
+        color: $light-türkiz;
+        opacity: 0;
+        transform: translate(-50%,-45px);
+        animation: openEditor 400ms forwards;
+    
+        .todo-edit-card-title{
+            font-weight: 600;
+            text-align: center;
+        }
+    
+        #edit-todo-textarea{
+            width: 100%;
+        }
+    
+        .edit-todo-btn-container{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 5rem;
+        }
+    
+        .edit-todo-details{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: .4rem .7rem;
+            border: 1px solid $light-türkiz;
+            border-radius: 10px;
+    
+            .todo-detail{
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+
 }
 
 .alert {
@@ -287,4 +357,10 @@ body {
     100% {
         opacity: 1;
     }
+}
+
+
+
+@keyframes openEditor{
+    100%{transform: translate(-50%,20px);; opacity: 1;}
 }
