@@ -16,7 +16,7 @@ export class EditorUI {
 
         editDiv.innerHTML = 
         `
-            <h4 class="todo-edit-card-title">${todo.title}</h4>
+            <input type="text" id="todo-edit-card-title" value="${todo.title}">
             <hr />
             <h5>Todo description:</h5>
             <textarea id="edit-todo-textarea">${todo.todoBody}</textarea>
@@ -57,13 +57,16 @@ export class EditorUI {
 
         let shortBody = '';
 
+        todo.title = document.getElementById("todo-edit-card-title").value;
         todo.todoBody = document.getElementById("edit-todo-textarea").value;
         if (todo.todoBody.length > 25) {
             shortBody = `${todo.todoBody.substring(0, 24)}...`;
         }
         Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
-        const toBeUpdatedRow = ui.todoTableRows.find(tr => tr.id.split("-")[1] == todo.id).querySelector(".tr-todo-description");
-        toBeUpdatedRow.innerHTML = todo.todoBody.length > 25 ? shortBody : todo.todoBody;
+        const toBeUpdatedRow = ui.todoTableRows.find(tr => tr.id.split("-")[1] == todo.id);
+        toBeUpdatedRow.querySelector(".tr-todo-title").innerHTML = todo.title;
+        toBeUpdatedRow.querySelector(".tr-todo-description").innerHTML = todo.todoBody.length > 25 ? shortBody : todo.todoBody;
+        toBeUpdatedRow.querySelector(".tr-todo-description").setAttribute("title", todo.todoBody);
         ui.displayMessage("Todo updated", "success");
         EditorUI.removeSelf();
     }

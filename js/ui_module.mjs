@@ -47,7 +47,7 @@ export class UI {
 
         trBody += `
             <td>${todoStatusIcon}</td>
-            <td>${todo.title}</td>
+            <td class="tr-todo-title">${todo.title}</td>
             <td class="tr-todo-description" title="${todo.todoBody}">${todo.todoBody.length > 25 ? shortBody : todo.todoBody}</td>
             <td>
                 <i class="far fa-eye edit-todo-btn"></i>

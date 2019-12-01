@@ -339,13 +339,30 @@ body {
           animation: openEditor 400ms forwards;
 }
 
-.todo-container #edit-div-window .todo-edit-card-title {
+.todo-container #edit-div-window h5 {
+  color: #004872;
+  font-size: 1.5rem;
+}
+
+.todo-container #edit-div-window input, .todo-container #edit-div-window textarea {
+  color: #004872;
   font-weight: 600;
-  text-align: center;
+  font-size: 2rem;
+  border: none;
+  outline: none;
+  text-align: left;
+  -webkit-transition: 200ms all ease-out;
+  transition: 200ms all ease-out;
+}
+
+.todo-container #edit-div-window input:focus, .todo-container #edit-div-window input:hover, .todo-container #edit-div-window textarea:focus, .todo-container #edit-div-window textarea:hover {
+  color: #0078bf;
+  border: 0.7px dotted #0078bf;
 }
 
 .todo-container #edit-div-window #edit-todo-textarea {
   width: 100%;
+  font-weight: 500;
 }
 
 .todo-container #edit-div-window .edit-todo-btn-container {

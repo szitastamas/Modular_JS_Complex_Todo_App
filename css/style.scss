@@ -288,13 +288,29 @@ body {
         transform: translate(-50%,-45px);
         animation: openEditor 400ms forwards;
     
-        .todo-edit-card-title{
+        h5{
+            color: $dark-türkiz;
+            font-size: 1.5rem;
+        }
+
+        input, textarea{
+            color: $dark-türkiz;
             font-weight: 600;
-            text-align: center;
+            font-size: 2rem;
+            border: none;
+            outline: none;
+            text-align: left;
+            transition: 200ms all ease-out;
+
+            &:focus, &:hover{
+                color: $light-türkiz;
+                border: .7px dotted $light-türkiz;
+            }
         }
     
         #edit-todo-textarea{
             width: 100%;
+            font-weight: 500;
         }
     
         .edit-todo-btn-container{
