@@ -176,6 +176,7 @@ export class UI {
             this.todoTable.classList.add("editing-state")
             this.todoForm.querySelectorAll("input").forEach(f => f.setAttribute("disabled", "true"))
             this.overlay.style.display = "block";
+            //this.overlay.addEventListener("click", EditorUI.removeSelf())
             
         } else {
             this.overlay.style.display = "none";

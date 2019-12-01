@@ -45,12 +45,27 @@ export class EditorUI {
                 this.saveChanges(todo)
             })
 
+            document.addEventListener("click", e => {
+                if (e.target === ui.overlay){
+                    this.removeSelf();
+                }
+            })
+
+            document.addEventListener("keydown", e => {
+                if(e.keyCode == 27){
+                    this.removeSelf();
+                }
+            })
+
     }
 
     static removeSelf(){
 
         ui.changeState("add")
-        document.getElementById("edit-div-window").remove();
+
+        if(document.getElementById("edit-div-window")){
+            document.getElementById("edit-div-window").remove();
+        }
     }
 
     static saveChanges(todo){
