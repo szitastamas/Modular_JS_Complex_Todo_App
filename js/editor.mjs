@@ -62,12 +62,12 @@ export class EditorUI {
         if (todo.todoBody.length > 25) {
             shortBody = `${todo.todoBody.substring(0, 24)}...`;
         }
-        Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
         const toBeUpdatedRow = ui.todoTableRows.find(tr => tr.id.split("-")[1] == todo.id);
         toBeUpdatedRow.querySelector(".tr-todo-title").innerHTML = todo.title;
         toBeUpdatedRow.querySelector(".tr-todo-description").innerHTML = todo.todoBody.length > 25 ? shortBody : todo.todoBody;
         toBeUpdatedRow.querySelector(".tr-todo-description").setAttribute("title", todo.todoBody);
         ui.displayMessage("Todo updated", "success");
+        Local_Storage.saveToLocalStorage(ToDoRepository.allTodos);
         EditorUI.removeSelf();
     }
 }

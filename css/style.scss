@@ -137,10 +137,6 @@ body {
 
     #todo-table {
         transition: 500ms all ease-out;
-        &.editing-state {
-            //opacity: 0;
-            //transform: scale(0);
-        }
 
         border-collapse: collapse;
         border-spacing: 0;
@@ -157,33 +153,7 @@ body {
                 }
             }
 
-            .status-icon {
-                position: relative;
-                margin: 0 0.5rem;
-
-                &::after {
-                    content: 'Finish / Unfinish';
-                    padding: 0.4rem 0.7rem;
-                    border: $dark-türkiz 1.5px solid;
-                    border-radius: 5px;
-                    color: $dark-türkiz;
-                    font-weight: 600;
-                    position: absolute;
-                    top: -90%;
-                    left: -12rem;
-                    font-size: 1.2rem;
-                    min-width: 10rem;
-                    opacity: 0;
-                    transition: all 200ms ease-out;
-                    transform: rotate(-40deg) translate(-2rem, 4rem);
-                    pointer-events: none;
-                }
-
-                &:hover:after {
-                    opacity: 1;
-                    transform: none;
-                }
-            }
+            
         }
 
         td,
@@ -202,7 +172,7 @@ body {
                     position: absolute;
                     color: white;
                     font-weight: 600;
-                    top: -15px;
+                    top: -20px;
                     padding: 0.5rem 1rem;
                     font-size: 1.4rem;
                     pointer-events: none;
@@ -226,6 +196,7 @@ body {
                 padding: 0.3rem;
                 cursor: pointer;
                 transition: 150ms all ease-out;
+                position: relative;
 
                 &:hover {
                     color: $light-türkiz;
@@ -238,34 +209,67 @@ body {
                         color: lighten(green, 5);
                     }
                 }
+
+                &::after {
+                    content: '';
+                    padding: 0.4rem 0.7rem;
+                    border: $dark-türkiz 1.5px solid;
+                    border-radius: 5px;
+                    color: $dark-türkiz;
+                    font-weight: 600;
+                    position: absolute;
+                    top: -100%;
+                    left: 0rem;
+                    font-size: 1.2rem;
+                    min-width: 10rem;
+                    max-height: 0;
+                    opacity: 0;
+                    transition: all 200ms ease-out;
+                    pointer-events: none;
+                }
+
+                &:hover:after {
+                    opacity: 1;
+                    max-height: 100%;
+                }
+                
+                &.status-icon {
+                    margin: 0 0.5rem;
+
+                    &::after{
+                        content: 'Finish / Unfinish';
+                    }
+                }
+                
+                &.edit-todo-btn{
+                    
+                    &::after{
+                        content: 'Details / Edit';
+                        left: -4rem;
+                    }
+                }
+
                 &.delete-todo-btn {
-                    position: relative;
 
                     &::after {
                         content: 'Delete ToDo';
-                        padding: 0.4rem 0.7rem;
                         border: red 1.5px solid;
-                        border-radius: 5px;
                         color: red;
-                        font-weight: 600;
-                        position: absolute;
-                        top: -80%;
-                        left: 2rem;
-                        font-size: 1.2rem;
-                        min-width: 10rem;
-                        opacity: 0;
-                        transition: all 200ms ease-out;
-                        transform: rotate(40deg) translate(2rem, 4rem);
-                        pointer-events: none;
+                        top: -90%;
+                        left: -400%;
                     }
 
                     &:hover {
                         color: red;
 
-                        &:after {
-                            opacity: 1;
-                            transform: none;
-                        }
+                    }
+                }
+
+                &.clock-icon{
+                    &::after{
+                        border: none;
+                        max-height: 0;
+                        padding: 0;
                     }
                 }
             }
@@ -379,4 +383,44 @@ body {
 
 @keyframes openEditor{
     100%{transform: translate(-50%,20px);; opacity: 1;}
+}
+
+@media(max-width: 868px){
+    .todo-container{
+        width: 100%;
+        padding: 1rem;
+        justify-content: center;
+        align-items: center;
+
+        #todo-table{
+            font-size: 1.2rem;
+
+            .tr-todo-description,
+            #th-todo-description{
+                display: none;
+            }
+
+            #todo-table-body{
+                tr{
+                    td{
+                        i{
+                            &.delete-todo-btn{
+                                color: red;
+                            }
+                            
+                        }
+
+                        .time-div{
+                            max-height: 100%;
+                            z-index: 5;
+                            font-size: 1rem;
+                            background: transparent;
+                            color: $dark-türkiz;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

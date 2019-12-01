@@ -183,37 +183,6 @@ body {
   border: none;
 }
 
-.todo-container #todo-table #todo-table-body .status-icon {
-  position: relative;
-  margin: 0 0.5rem;
-}
-
-.todo-container #todo-table #todo-table-body .status-icon::after {
-  content: 'Finish / Unfinish';
-  padding: 0.4rem 0.7rem;
-  border: #004872 1.5px solid;
-  border-radius: 5px;
-  color: #004872;
-  font-weight: 600;
-  position: absolute;
-  top: -90%;
-  left: -12rem;
-  font-size: 1.2rem;
-  min-width: 10rem;
-  opacity: 0;
-  -webkit-transition: all 200ms ease-out;
-  transition: all 200ms ease-out;
-  -webkit-transform: rotate(-40deg) translate(-2rem, 4rem);
-          transform: rotate(-40deg) translate(-2rem, 4rem);
-  pointer-events: none;
-}
-
-.todo-container #todo-table #todo-table-body .status-icon:hover:after {
-  opacity: 1;
-  -webkit-transform: none;
-          transform: none;
-}
-
 .todo-container #todo-table td,
 .todo-container #todo-table th {
   text-align: center;
@@ -236,7 +205,7 @@ body {
   position: absolute;
   color: white;
   font-weight: 600;
-  top: -15px;
+  top: -20px;
   padding: 0.5rem 1rem;
   font-size: 1.4rem;
   pointer-events: none;
@@ -266,6 +235,7 @@ body {
   cursor: pointer;
   -webkit-transition: 150ms all ease-out;
   transition: 150ms all ease-out;
+  position: relative;
 }
 
 .todo-container #todo-table td i:hover,
@@ -283,30 +253,55 @@ body {
   color: #009a00;
 }
 
-.todo-container #todo-table td i.delete-todo-btn,
-.todo-container #todo-table th i.delete-todo-btn {
-  position: relative;
+.todo-container #todo-table td i::after,
+.todo-container #todo-table th i::after {
+  content: '';
+  padding: 0.4rem 0.7rem;
+  border: #004872 1.5px solid;
+  border-radius: 5px;
+  color: #004872;
+  font-weight: 600;
+  position: absolute;
+  top: -100%;
+  left: 0rem;
+  font-size: 1.2rem;
+  min-width: 10rem;
+  max-height: 0;
+  opacity: 0;
+  -webkit-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+  pointer-events: none;
+}
+
+.todo-container #todo-table td i:hover:after,
+.todo-container #todo-table th i:hover:after {
+  opacity: 1;
+  max-height: 100%;
+}
+
+.todo-container #todo-table td i.status-icon,
+.todo-container #todo-table th i.status-icon {
+  margin: 0 0.5rem;
+}
+
+.todo-container #todo-table td i.status-icon::after,
+.todo-container #todo-table th i.status-icon::after {
+  content: 'Finish / Unfinish';
+}
+
+.todo-container #todo-table td i.edit-todo-btn::after,
+.todo-container #todo-table th i.edit-todo-btn::after {
+  content: 'Details / Edit';
+  left: -4rem;
 }
 
 .todo-container #todo-table td i.delete-todo-btn::after,
 .todo-container #todo-table th i.delete-todo-btn::after {
   content: 'Delete ToDo';
-  padding: 0.4rem 0.7rem;
   border: red 1.5px solid;
-  border-radius: 5px;
   color: red;
-  font-weight: 600;
-  position: absolute;
-  top: -80%;
-  left: 2rem;
-  font-size: 1.2rem;
-  min-width: 10rem;
-  opacity: 0;
-  -webkit-transition: all 200ms ease-out;
-  transition: all 200ms ease-out;
-  -webkit-transform: rotate(40deg) translate(2rem, 4rem);
-          transform: rotate(40deg) translate(2rem, 4rem);
-  pointer-events: none;
+  top: -90%;
+  left: -400%;
 }
 
 .todo-container #todo-table td i.delete-todo-btn:hover,
@@ -314,11 +309,11 @@ body {
   color: red;
 }
 
-.todo-container #todo-table td i.delete-todo-btn:hover:after,
-.todo-container #todo-table th i.delete-todo-btn:hover:after {
-  opacity: 1;
-  -webkit-transform: none;
-          transform: none;
+.todo-container #todo-table td i.clock-icon::after,
+.todo-container #todo-table th i.clock-icon::after {
+  border: none;
+  max-height: 0;
+  padding: 0;
 }
 
 .todo-container #edit-div-window {
@@ -461,6 +456,36 @@ body {
     -webkit-transform: translate(-50%, 20px);
             transform: translate(-50%, 20px);
     opacity: 1;
+  }
+}
+
+@media (max-width: 868px) {
+  .todo-container {
+    width: 100%;
+    padding: 1rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .todo-container #todo-table {
+    font-size: 1.2rem;
+  }
+  .todo-container #todo-table .tr-todo-description,
+  .todo-container #todo-table #th-todo-description {
+    display: none;
+  }
+  .todo-container #todo-table #todo-table-body tr td i.delete-todo-btn {
+    color: red;
+  }
+  .todo-container #todo-table #todo-table-body tr td .time-div {
+    max-height: 100%;
+    z-index: 5;
+    font-size: 1rem;
+    background: transparent;
+    color: #004872;
   }
 }
 /*# sourceMappingURL=style.css.map */
